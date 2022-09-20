@@ -25,6 +25,10 @@ public class IndexAction {
         return Template.INDEX;
     }
 
+    @GetMapping(Endpoint.ROOT + "/sample")
+    public String indexSamplePage() {
+        return Template.INDEX + "_sample";
+    }
     /**
      * 서버 내에서 오류가 발생 했을때 이동 되는 페이지
      *
