@@ -1,0 +1,63 @@
+plugins {
+    id 'org.springframework.boot' version '2.6.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    runtimeOnly 'mysql:mysql-connector-java'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+
+    // mybatis
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+
+
+    // excel, csv libs
+    implementation 'org.apache.poi:poi:4.1.2'
+    implementation 'org.apache.poi:poi-ooxml:4.1.2'
+    implementation 'org.jxls:jxls:2.10.0'
+    implementation 'net.sf.jxls:jxls-core:1.0.6'
+    implementation 'org.jxls:jxls-poi:2.10.0'
+    implementation 'org.jxls:jxls-jexcel:1.0.9'
+
+    // gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    // jpa
+//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // querydsl
+//    implementation 'com.querydsl:querydsl-jpa:4.4.0'
+//    annotationProcessor("javax.persistence:javax.persistence-api", "javax.annotation:javax.annotation-api", "com.querydsl:querydsl-apt:4.4.0:jpa")
+
+    // jsoup HTML parser library @ https://jsoup.org/
+    implementation 'org.jsoup:jsoup:1.15.2'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
