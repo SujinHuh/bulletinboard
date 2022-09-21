@@ -23,7 +23,8 @@ public class MvcConfig implements WebMvcConfigurer {
 
     // 정적 파일 경로
     private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
-            "classpath:/resources/", "classpath:/static/", "classpath:/templates/"
+//            "classpath:/resources/", "classpath:/static/", "classpath:/templates/"
+            "classpath:/resources/", "classpath:/static/"
     };
 
     @Override	// 정적 리소스 핸들러
@@ -39,7 +40,7 @@ public class MvcConfig implements WebMvcConfigurer {
     @Bean    // 뷰리졸버 설정
     public ViewResolver internalResourceViewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-//        viewResolver.setPrefix("/templates");
+        viewResolver.setPrefix("/templates");
         viewResolver.setSuffix(".html");
         viewResolver.setCache(false);
         return viewResolver;
