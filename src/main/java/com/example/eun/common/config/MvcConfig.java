@@ -34,7 +34,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
 //    @Override	// 정적 컨텐츠 처리 설정
 //    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-//        configurer.enable();
+////        configurer.enable();
 //    }
 
     @Bean    // 뷰리졸버 설정
