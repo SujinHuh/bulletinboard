@@ -29,11 +29,9 @@ class Login {
     }
 
     login(e) {
-        console.log(e);
         let param = {
             email : this.dom.email.value,
-            password : this.dom.password.value,
-            username : "username",
+            password : this.dom.password.value
         };
         axios.post('/member/login', param)
             .then((res) => {

@@ -36,7 +36,7 @@ public class GenerateMemberAction {
         ResponseVo response = new ResponseVo();
         log.info("login!!");
 
-        log.info("param >>> {}", param);
+        log.info("param >>> {}", param.toString());
 
         response.setCode(ResponseCodes.SUCCESS.getCode());
         response.setMessages(ResponseCodes.SUCCESS.getMessage());

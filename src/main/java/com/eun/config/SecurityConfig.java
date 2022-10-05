@@ -1,23 +1,21 @@
 package com.eun.config;
 
-import lombok.extern.slf4j.Slf4j;
+import com.eun.property.Endpoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.annotation.web.configurers.RequestCacheConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Slf4j
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
+
     @Bean
-    @Order(0)
     public SecurityFilterChain resources(HttpSecurity http) throws Exception {
-        log.info(">>>>>>>>>>>>>>>>>>>>> resources!!");
         return http.requestMatchers(matchers -> matchers
                         .antMatchers("/js/member/**", "/js/common/**", "/css/**", "/favicon.ico"))
                 .authorizeHttpRequests(authorize -> authorize
@@ -30,33 +28,36 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        log.info(">>>>>>>>>>>>>>>>>>>>> securityFilterChain!!");
-//        return http.csrf(AbstractHttpConfigurer::disable)
-//                .headers(headers -> headers
-//                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
-//                .authorizeRequests(authorize -> authorize
-//                        .antMatchers("/member").hasRole("USER")
-//                        .anyRequest().authenticated())
-//                .formLogin(form -> form
-//                        .usernameParameter("email")
-//                        .usernameParameter("password")
-//                        .loginPage("/member/login").permitAll()
-//                        .defaultSuccessUrl("/"))
-//                .logout(logout -> logout
-//                        .logoutUrl("/member/logout"))
-//                .build();
-
-        http.authorizeRequests().antMatchers("/member/login").permitAll()
-                .anyRequest().authenticated()
-                .and().formLogin()
-                .loginPage("/member/login")
-                .usernameParameter("email")
-                .permitAll()
+        http.authorizeRequests()
+                    .antMatchers(Endpoint.LOGIN, Endpoint.MEMBER_CREATE)
+                    .permitAll()
+                    .anyRequest().authenticated()
                 .and()
-                .logout().permitAll();
+//                .addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling()
+//                .accessDeniedHandler(customAccessDeniedHandler)
+//                .and()
+//                    .sessionManagement()
+//                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                    .csrf().disable()
+                    .cors().disable()
+                    .formLogin().disable()
+                    .httpBasic().disable()
+                .logout()
+                    .logoutSuccessUrl("/")
+//                .and()
+//                .oauth2Login()
+//                    .authorizationEndpoint()
+//                    .authorizationRequestRepository(cookieBasedAuthorizationRequestRepository)
+//                .and()
+//                    .userInfoEndpoint()
+//                    .userService()
+//                .and()
+//                    .successHandler(authenticationSuccessHandler)
+//                    .failureHandler(authenticationFailureHandler)
 
-        http.headers().frameOptions().sameOrigin();
-
+                ;
         return http.build();
     }
 
