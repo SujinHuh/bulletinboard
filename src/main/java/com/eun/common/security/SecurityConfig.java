@@ -1,39 +1,66 @@
 package com.eun.common.security;
 
-import com.eun.common.property.Endpoint;
+import com.eun.common.security.jwt.AuthEntryPointJwt;
+import com.eun.common.security.jwt.AuthTokenFilter;
+import com.eun.common.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.RequestCacheConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
     @Autowired
     private CorsConfig corsConfig;
 
+	@Autowired
+	UserDetailsServiceImpl userDetailsService;
+
+	@Autowired
+	private AuthEntryPointJwt unauthorizedHandler;
+
 	@Bean
-	public SecurityFilterChain resources(HttpSecurity http) throws Exception {
-		return http.requestMatchers(matchers -> matchers
-						.antMatchers("/js/member/**", "/js/common/**", "/css/**", "/favicon.ico"))
-				.authorizeHttpRequests(authorize -> authorize
-						.anyRequest().authenticated())
-				.requestCache(RequestCacheConfigurer::disable)
-				.securityContext(AbstractHttpConfigurer::disable)
-				.sessionManagement(AbstractHttpConfigurer::disable)
-				.build();
+	public AuthTokenFilter authenticationJwtTokenFilter() {
+		return new AuthTokenFilter();
 	}
 
-    @Bean
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+
+		authProvider.setUserDetailsService(userDetailsService);
+		authProvider.setPasswordEncoder(passwordEncoder());
+
+		return authProvider;
+	}
+
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+		return authConfig.getAuthenticationManager();
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+
+	@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
 		http
 			.csrf().disable()
 			.formLogin().disable()
@@ -43,19 +70,24 @@ public class SecurityConfig {
 			.securityContext(AbstractHttpConfigurer::disable)
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
+				.authenticationProvider(authenticationProvider())
+				.exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+			.and()
+				.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
 				.authorizeRequests()
-				    .antMatchers("/js/member/**", "/js/common/**", "/css/**", "/favicon.ico")
+					.mvcMatchers("/js/member/**", "/js/common/**", "/css/**", "/favicon.ico")
 						.permitAll()
-					.mvcMatchers(Endpoint.LOGIN, Endpoint.MEMBER_CREATE)
+					.mvcMatchers("/member/login", "/member/create")
 						.permitAll()
-					.mvcMatchers(Endpoint.KAKAO_PARSING)
+					.mvcMatchers("/user/**")
 						.hasAnyAuthority("ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN")
-					.mvcMatchers(Endpoint.KAKAO_PARSING)
+					.mvcMatchers("/manager/**")
 						.hasAnyAuthority("ROLE_MANAGER", "ROLE_ADMIN")
-					.mvcMatchers(Endpoint.KAKAO_PARSING)
+					.mvcMatchers("/admin/**")
 						.hasAnyAuthority("ROLE_ADMIN")
 					.anyRequest().authenticated()
 		;
+
 		return http.build();
     }
 
