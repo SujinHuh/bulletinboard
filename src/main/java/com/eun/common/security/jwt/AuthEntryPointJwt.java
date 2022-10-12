@@ -23,12 +23,13 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
   @Override
   public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    log.info("권한 없음");
     log.error("Unauthorized error: {}", authException.getMessage());
 
     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
-    response.sendRedirect(Endpoint.LOGIN);
+    response.sendRedirect(Endpoint.LOGIN + "?auth=false");
   }
 
 }

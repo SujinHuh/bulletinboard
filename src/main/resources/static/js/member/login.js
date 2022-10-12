@@ -5,6 +5,16 @@ import axios from '/js/common/axios.js';
 class Login {
 
     constructor() {
+        const paramsString = location.search;
+        let searchParams = new URLSearchParams(paramsString);
+
+        if( searchParams.has('auth') ) {
+            // TODO MODAL로 변경 예정
+            alert('로그인 해주세요');
+            location.href = '/member/login';
+        }
+
+
         this.dom = {
             // input
             email : document.getElementById('email'),

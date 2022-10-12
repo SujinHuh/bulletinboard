@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -67,7 +68,6 @@ public class SecurityConfig {
 			.formLogin().disable()
 			.httpBasic().disable()
 			.requestCache(RequestCacheConfigurer::disable)
-			.securityContext(AbstractHttpConfigurer::disable)
 		;
 
 		http
@@ -84,7 +84,7 @@ public class SecurityConfig {
 
 		http
 			.authorizeRequests()
-				.mvcMatchers("/js/member/**", "/js/common/**", "/css/**", "/favicon.ico")
+				.antMatchers("/js/member/**", "/js/common/**", "/css/**", "/favicon.ico")
 					.permitAll()
 				.mvcMatchers("/member/login", "/member/create")
 					.permitAll()
