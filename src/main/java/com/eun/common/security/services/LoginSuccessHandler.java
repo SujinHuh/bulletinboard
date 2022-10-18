@@ -28,13 +28,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
                                         Authentication auth) throws IOException, ServletException {
         HttpSession session = req.getSession();
 
-        log.info("email >> " + req.getParameter("email"));
-        log.info("password >> " + req.getParameter("password"));
-        log.info("login-remember-me >> " + req.getParameter("loginRememberMe"));
-        log.info(auth.getName());
-        log.info(auth.getDetails().toString());
-        log.info(auth.getPrincipal().toString());
-
         Member member = memberService.getEmail(auth.getName());
 
         if(req.getParameter("loginRememberMe") != null && "on".equals(req.getParameter("loginRememberMe"))){

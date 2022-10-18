@@ -23,8 +23,6 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest req,
                                         HttpServletResponse res,
                                         AuthenticationException execption) throws IOException, ServletException {
-        log.info("fail!!");
-
         JsonObject json = new JsonObject();
 
         json.addProperty("result", false);

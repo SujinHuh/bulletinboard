@@ -32,7 +32,7 @@ public class WebSecurityConfiguration {
 			.csrf().disable()
 			.httpBasic().disable()
 			.requestCache(RequestCacheConfigurer::disable)
-			.exceptionHandling().accessDeniedPage("/forbidden")
+			.exceptionHandling().accessDeniedPage("/404.html")
 		;
 
 		// form login 관련 설정
