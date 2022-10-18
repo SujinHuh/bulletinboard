@@ -13,6 +13,7 @@ public class Endpoint {
 
     // member
     public static final String LOGIN = "/member/login";
+    public static final String LOGIN_PROCESS = "/member/login/process";
     public static final String LOGOUT = "/member/logout";
     public static final String MEMBER_CREATE = "/member/create";
     public static final String MEMBER_UPDATE = "/member/update";

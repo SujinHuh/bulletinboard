@@ -1,15 +1,17 @@
 package com.eun.member.mapper;
 
+import com.eun.member.vo.Member;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-
-import java.util.List;
-import java.util.Map;
 
 @Mapper
 public interface MemberMapper {
 
-    @Select("SELECT * FROM users1 where email = #{email}")
-    Map<String, Object> findByEmail(String email);
+    @Insert("INSERT INTO MEMBER(email, password, username, role) values(#{email}, #{encPassword}, #{username}, #{role})")
+    int create(Member param);
+
+    @Select("SELECT * FROM MEMBER WHERE EMAIL = #{email}")
+    Member getEmail(String email);
 
 }

@@ -19,6 +19,7 @@ class Login {
             // input
             email : document.getElementById('email'),
             password : document.getElementById('password'),
+            loginRememberMe : document.getElementById('loginRemeberMe'),
             // button
             loginBt : document.getElementById('loginBt'),
             signUpBt : document.getElementById('signUpBt'),
@@ -28,24 +29,29 @@ class Login {
     }
 
     init() {
-        console.log('init!!');
         this.eventBind();
     }
 
     eventBind() {
-        console.log('eventBind!!');
         this.dom.loginBt.addEventListener('click', this.login.bind(this));
         this.dom.signUpBt.addEventListener('click', function() { location.href = '/member/create'});
     }
 
     login(e) {
-        let param = {
-            email : this.dom.email.value,
-            password : this.dom.password.value
-        };
-        axios.post('/member/login', param)
+        let param = `email=${this.dom.email.value}` +
+                    `&password=${this.dom.password.value}` +
+                    `&loginRememberMe=${this.dom.loginRememberMe.value}`;
+
+        console.log(param);
+
+        axios.post('/member/login/process', param)
             .then((res) => {
                 console.log(res);
+                if(res.data.result){
+                    location.href = '/';
+                }else{
+                    alert(res.data.message);
+                }
             })
             .catch((res) => {
                 console.log(res);
