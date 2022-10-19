@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface MemberMapper {
 
-    @Insert("INSERT INTO MEMBER(email, password, username, role) values(#{email}, #{encPassword}, #{username}, #{role})")
+    @Insert("INSERT INTO MEMBER(email, password, name, role) values(#{email}, #{password}, #{name}, #{role})")
     int create(Member param);
 
     @Select("SELECT * FROM MEMBER WHERE EMAIL = #{email}")

@@ -18,8 +18,10 @@ public class Endpoint {
     public static final String MEMBER_CREATE = "/member/create";
     public static final String MEMBER_UPDATE = "/member/update";
 
-    // parsing
-    public static final String KAKAO_PARSING = "/parsing/kakaoMap";
+    // todo
+
+    public static final String TODO_ADD = "/todolist/add";
+    public static final String TODO_LIST = "/todolist/list";
 
     public static final String REDIRECT = "redirect:";
     /**

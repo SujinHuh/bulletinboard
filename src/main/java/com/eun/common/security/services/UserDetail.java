@@ -2,16 +2,28 @@ package com.eun.common.security.services;
 
 import com.eun.member.vo.Member;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
-@NoArgsConstructor
+
+@Getter
 public class UserDetail implements UserDetails {
 
     private Member member;
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
 
     @Builder
     public UserDetail(Member member) {
@@ -20,17 +32,19 @@ public class UserDetail implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+        list.add(new SimpleGrantedAuthority(member.getRole()));
+        return list;
     }
 
     @Override
     public String getPassword() {
-        return member.getPassword();
+        return member == null ? null : member.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return member.getEmail();
+        return member == null ? null : member.getEmail();
     }
 
     @Override

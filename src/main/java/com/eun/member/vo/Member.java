@@ -6,13 +6,15 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "password")
 public class Member {
 
+    private int seq;
     private String role;
+    private String name;
     private String email;
-    private String username;
     private String password;
-    private String encPassword;
+    private String createDate;
+    private String updateDate;
 
 }

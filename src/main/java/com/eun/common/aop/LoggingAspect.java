@@ -82,8 +82,7 @@ public class LoggingAspect {
     /**
      * 모든 서비스 시작과 종료 부분에 로그를 남깁니다.
      */
-    @Around("execution(* com.eun.process.*.service.*Service.*(..))" +
-            "execution(* com.eun.process.*.*.service.*Service.*(..))")
+    @Around("execution(* com.eun.*.service.*Service.*(..))")
     public Object serviceLogging(ProceedingJoinPoint joinPoint) throws Throwable {
         String className = joinPoint.getTarget().getClass().getCanonicalName();
         String methodName = joinPoint.getSignature().getName();
@@ -101,8 +100,7 @@ public class LoggingAspect {
     /**
      * 모든 레파지토리 시작과 종료 부분에 로그를 남깁니다.
      */
-    @Around("execution(* com.eun.process.*.dao.*Dao.*(..))" +
-            "execution(* com.eun.process.*.*.dao.*Dao.*(..))")
+    @Around("execution(* com.eun.*.mapper.*Mapper.*(..))")
     public Object repositoryLogging(ProceedingJoinPoint joinPoint) throws Throwable {
         String className = joinPoint.getTarget().getClass().getCanonicalName();
         String methodName = joinPoint.getSignature().getName();
@@ -111,16 +109,16 @@ public class LoggingAspect {
 //            return joinPoint.proceed();
 //        }
 
-        log.info("--- repository 레파지토리 요청이 시작 되었습니다. START : " + className + "." + methodName);
+        log.info("--- mapper 레파지토리 요청이 시작 되었습니다. START : " + className + "." + methodName);
         Object obj = joinPoint.proceed();
-        log.info("--- repository 레파지토리 요청이 종료 되었습니다. END : " + className + "." + methodName);
+        log.info("--- mapper 레파지토리 요청이 종료 되었습니다. END : " + className + "." + methodName);
         return obj;
     }
 
     /**
      * 모든 Handler 시작과 종료 부분에 로그를 남깁니다.
      */
-    @Around("execution(* com.eun.handler.*Handler.*(..))")
+    @Around("execution(* com.eun.common.*.*Handler.*(..))")
     public Object handlerLogging(ProceedingJoinPoint joinPoint) throws Throwable {
         String className = joinPoint.getTarget().getClass().getCanonicalName();
         String methodName = joinPoint.getSignature().getName();

@@ -9,8 +9,8 @@ class Create {
             loginBt : document.getElementById('loginBt'),
             signUpBt : document.getElementById('signUpBt'),
 
+            name : document.getElementById('name'),
             email : document.getElementById('email'),
-            username : document.getElementById('username'),
             password : document.getElementById('password'),
         };
 
@@ -30,8 +30,8 @@ class Create {
 
     create() {
         let param = {
+            name : this.dom.name.value,
             email : this.dom.email.value,
-            username : this.dom.username.value,
             password : this.dom.password.value,
         };
 

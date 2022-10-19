@@ -8,6 +8,9 @@ import com.eun.member.service.MemberService;
 import com.eun.member.vo.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationTrustResolver;
+import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +28,13 @@ public class MemberAction {
     // 페이지 이동
     @GetMapping(value = Endpoint.LOGIN)
     public String login() {
-        return Template.LOGIN;
+        AuthenticationTrustResolver trustResolver = new AuthenticationTrustResolverImpl();
+        if (trustResolver.isAnonymous(SecurityContextHolder.getContext().getAuthentication())) {
+            return Template.LOGIN;
+        }
+        else {
+            return Endpoint.redirect(Endpoint.ROOT);
+        }
     }
 
     @GetMapping(value = Endpoint.MEMBER_CREATE)
@@ -38,24 +47,11 @@ public class MemberAction {
         return Template.MEMBER_UPDATE;
     }
 
-    @PostMapping(value = Endpoint.LOGIN_PROCESS)
-    @ResponseBody public ResponseVo login(@RequestBody Member param) {
-        ResponseVo response = new ResponseVo();
-        log.info("login!!");
-        log.info("email ::: " + param.getEmail());
-        log.info("password ::: " + param.getPassword());
-
-        response.setCode(ResponseCodes.SUCCESS.getCode());
-        response.setMessages(ResponseCodes.SUCCESS.getMessage());
-        return response;
-    }
-
     @PostMapping(value = Endpoint.MEMBER_CREATE)
     @ResponseBody public ResponseVo create(@RequestBody Member param) {
-        System.out.printf("create");
         ResponseVo response = new ResponseVo();
 
-        param.setEncPassword(passwordEncoder.encode(param.getPassword()));
+        param.setPassword(passwordEncoder.encode(param.getPassword()));
 
         int result = memberService.create(param);
 
@@ -73,12 +69,6 @@ public class MemberAction {
     @ResponseBody public ResponseVo update(@RequestBody Member param) {
         ResponseVo response = new ResponseVo();
         log.info("update");
-        return response;
-    }
-
-    @PostMapping(value = Endpoint.LOGOUT)
-    @ResponseBody public ResponseVo logout(@RequestBody Member param) {
-        ResponseVo response = new ResponseVo();
         return response;
     }
 

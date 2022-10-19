@@ -68,7 +68,7 @@ public class WebSecurityConfiguration {
 					.permitAll()
 				.mvcMatchers("/member/login", "/member/create")
 					.permitAll()
-				.mvcMatchers("/student/**", "/js/student/**")
+				.mvcMatchers("/student/**", "/js/student/**", "/todo/**")
 					.hasAnyAuthority("ROLE_STUDENT", "ROLE_PROFESSOR", "ROLE_ADMIN")
 				.mvcMatchers("/professor/**", "/js/professor/**")
 					.hasAnyAuthority("ROLE_PROFESSOR", "ROLE_ADMIN")
