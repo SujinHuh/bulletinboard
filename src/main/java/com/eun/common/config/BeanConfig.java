@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-public class BeanConfiguration {
+public class BeanConfig {
 
     /**
      * Object Mapper
