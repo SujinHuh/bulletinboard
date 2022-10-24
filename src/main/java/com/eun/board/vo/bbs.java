@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Board {
+public class bbs {
     private Long boardId;
 
 }
