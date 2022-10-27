@@ -18,7 +18,7 @@ class Sidebar {
 
         this.eventBind();
     }
-
+    //토글?
     eventBind() {
         this.dom.sidebarToggler.addEventListener('click', this.toggle.bind(this));
     }
@@ -27,6 +27,11 @@ class Sidebar {
         this.dom.sidebar.classList.toggle('open');
         this.dom.content.classList.toggle('open');
     }
+
+    // 함수 2개만들면되요
+    // axios로 통신해서 메뉴가져오는거
+
+    // 메뉴가저온걸로 rendering할부분
 
 }
 

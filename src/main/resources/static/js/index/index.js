@@ -19,7 +19,7 @@ class Index {
         this.getList();
     }
 
-    getList() {
+    getList() { // 가져오기
         let div;
         axios.post('/todolist/list')
             .then((res) => {
@@ -65,7 +65,7 @@ class Index {
             });
     }
 
-    makeDiv(data) {
+    makeDiv(data) {     // 렌더링
         let el = document.createElement('div');
 
         let div = '' +
