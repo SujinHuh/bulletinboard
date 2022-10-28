@@ -35,6 +35,10 @@ public class WebSecurityConfiguration {
 			.exceptionHandling().accessDeniedPage("/404.html")
 		;
 
+//		http
+//			.addFilterBefore(new AuthTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+//		;
+
 		// form login 관련 설정
 		http
 			.formLogin()
@@ -52,7 +56,7 @@ public class WebSecurityConfiguration {
 			.logoutUrl(Endpoint.LOGOUT)
 			.logoutSuccessUrl(Endpoint.LOGIN)
 		;
-		
+
 		// session 설정
 		http
 			.sessionManagement()

@@ -39,7 +39,13 @@ public class MemberAction {
 
     @GetMapping(value = Endpoint.MEMBER_CREATE)
     public String create() {
-        return Template.MEMBER_CREATE;
+        AuthenticationTrustResolver trustResolver = new AuthenticationTrustResolverImpl();
+        if (trustResolver.isAnonymous(SecurityContextHolder.getContext().getAuthentication())) {
+            return Template.MEMBER_CREATE;
+        }
+        else {
+            return Endpoint.redirect(Endpoint.ROOT);
+        }
     }
 
     @GetMapping(value = Endpoint.MEMBER_UPDATE)

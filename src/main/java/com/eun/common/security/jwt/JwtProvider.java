@@ -1,5 +1,6 @@
 package com.eun.common.security.jwt;
 
+import com.eun.common.security.services.UserDetail;
 import com.eun.member.vo.Member;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -13,20 +14,20 @@ import java.util.Date;
 
 @Slf4j
 @Component
-public class JwtUtils {
+public class JwtProvider {
 
-    private String JWT_SECRET_KEY = "JWT_SECRET_KEY";
+    private String JWT_SECRET_KEY = "JWT_SECRET_KEY_LENGTH_LENGTH_LENGTH_JWT_SECRET_KEY_LENGTH_LENGTH_LENGTH";
 
     private int jwtExpirationMs = 1000 * 60 * 60 * 24;
 
     public String generateJwtToken(Authentication authentication) {
 
-        Member userPrincipal = (Member) authentication.getPrincipal();
+        UserDetail user = (UserDetail) authentication.getPrincipal();
 
         Key key = Keys.hmacShaKeyFor(JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
 
         return Jwts.builder()
-                .setSubject((userPrincipal.getEmail()))
+                .setSubject(user.getUsername())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(key, SignatureAlgorithm.HS512)

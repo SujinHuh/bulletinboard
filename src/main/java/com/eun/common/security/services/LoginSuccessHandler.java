@@ -1,5 +1,6 @@
 package com.eun.common.security.services;
 
+import com.eun.common.security.jwt.JwtProvider;
 import com.eun.member.service.MemberService;
 import com.eun.member.vo.Member;
 import com.google.gson.JsonObject;
@@ -20,6 +21,7 @@ import java.io.OutputStream;
 @Component
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
+    @Autowired JwtProvider jwtProvider;
     @Autowired MemberService memberService;
 
     @Override
@@ -35,6 +37,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         }else{
             log.info("자동로그인 안해줘야됨.");
         }
+
+        String jwtToken = jwtProvider.generateJwtToken(auth);
+
+        log.info(jwtToken);
 
         session.setAttribute("member", member);
 
