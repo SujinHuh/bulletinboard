@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class bbs {
     private Long  seq;//seq
+    private String bbsCd; //bbs_code
     private String title;//제목
     private String content; //내용
     private String name;//이름

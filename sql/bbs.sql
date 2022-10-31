@@ -3,7 +3,7 @@ drop table bbs;
 CREATE TABLE bbs
 (
     seq         INT NOT NULL AUTO_INCREMENT,
-    type        Varchar(2),
+    bbs_cd        Varchar(20),
     title       VARCHAR(100),
     content     VARCHAR(2000),
     name        VARCHAR(20),
