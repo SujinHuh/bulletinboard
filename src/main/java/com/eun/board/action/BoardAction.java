@@ -6,6 +6,7 @@ import com.eun.common.security.services.UserDetail;
 import com.eun.constants.ResponseCodes;
 import com.eun.constants.ResponseVo;
 import com.eun.member.vo.Member;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -13,9 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Controller
 public class BoardAction {
 
@@ -49,13 +52,19 @@ public class BoardAction {
 
     /**게시판 insert */
     @PostMapping(value = "/freeboard/add")
-    @ResponseBody public ResponseVo add(@RequestBody Bbs param, Member member, Authentication authentication){
+    @ResponseBody public ResponseVo add(@RequestBody Bbs param, Authentication authentication){
         ResponseVo response = new ResponseVo();
-
+        //스프링시큐리티 자체가 authentication 이객체에 세션을 만듬
         UserDetail user = (UserDetail) authentication.getPrincipal();
+        Member member = user.getMember();
         //member email을  bbs email 치환
+        param.setName(member.getName());
         param.setEmail(member.getEmail());
-        param.setName(user.getUsername());
+        param.setMemberSeq(member.getSeq());
+        log.info("로그인정보 {}", member.toString());
+        log.info("작성글 정보 {}", param.toString());
+
+        // service 전달 전 화면에서 올라온 데이터들이 정확한지 검증하는 밸리데이션 추가
 
         //service 전달
         int result = boardService.add(param);

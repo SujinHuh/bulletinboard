@@ -2,9 +2,11 @@ package com.eun.board.vo;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class Bbs {
     private int seq;//seq
     private String bbsCd; //bbs_code

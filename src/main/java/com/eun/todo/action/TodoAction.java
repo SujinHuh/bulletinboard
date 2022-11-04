@@ -29,7 +29,7 @@ public class TodoAction {
         // 세션에서 유저정보 확인
         UserDetail user = (UserDetail) authentication.getPrincipal();
         log.info(user.getUsername());
-
+        log.info(user.getMember().toString());
         // 2. service 전달
         List<Todo> list = todoService.list(user.getUsername());
         log.info(list.toString());

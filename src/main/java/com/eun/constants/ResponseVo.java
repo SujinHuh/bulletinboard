@@ -2,6 +2,7 @@ package com.eun.constants;
 
 import lombok.*;
 import org.apache.tomcat.util.buf.StringUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+/**  HTTP상태 코드 */
 public class ResponseVo {
 
     private String code = ResponseCodes.ERROR.getCode();
