@@ -50,6 +50,11 @@ public class BoardAction {
         return response;
     }
 
+    @GetMapping(value="/freeboard/content")
+    public String add(){
+        return "/board/content";
+    }
+
     /**게시판 insert */
     @PostMapping(value = "/freeboard/add")
     @ResponseBody public ResponseVo add(@RequestBody Bbs param, Authentication authentication){

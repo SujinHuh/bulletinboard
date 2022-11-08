@@ -14,4 +14,3 @@ CREATE TABLE todo (
 
 select * from todo;
 
-
