@@ -28,6 +28,4 @@ WHERE (SELECT bbs.email, member.email
             member
        WHERE bbs.email = member.email);
 
-
-
-
+Insert

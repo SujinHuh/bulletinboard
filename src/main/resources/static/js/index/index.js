@@ -39,6 +39,7 @@ class Index {
         this.dom.TodoListInputBt.addEventListener('click', this.addTodo.bind(this));
     }
 
+    // todoadd
     addTodo(e) {
         let param = {
             text : this.dom.TodoListInput.value
@@ -64,6 +65,34 @@ class Index {
                 console.log(res);
             });
     }
+
+    //contentAdd
+    addContent(e) {
+        let param = {
+            text : this.dom.TodoListInput.value
+        };
+
+        axios.post('/freeboard/add', param)
+            .then((res) => {
+                console.log(res);
+                if(res.data.code === '0000'){
+                    alert('추가 완료.');
+
+                    // 입력한 인풋 초기화
+                    this.dom.TodoListInput.value = '';
+
+                    // 동적으로 붙여줘야됨.
+                    let div = this.makeDiv(res.data.data);
+                    this.dom.todoListDiv.append(div);
+                }else{
+                    alert('추가 실패.');
+                }
+            })
+            .catch((res) => {
+                console.log(res);
+            });
+    }
+
 
     makeDiv(data) {     // 렌더링
         let el = document.createElement('div');
