@@ -63,6 +63,7 @@ public class BoardAction {
         UserDetail user = (UserDetail) authentication.getPrincipal();
         Member member = user.getMember();
         //member email을  bbs email 치환
+        param.setBbsCd("FR");
         param.setName(member.getName());
         param.setEmail(member.getEmail());
         param.setMemberSeq(member.getSeq());

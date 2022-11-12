@@ -21,11 +21,6 @@ CREATE TABLE bbs
 
 -- bbs.email, member.email 동일한 것으로  bbs.memberseq 값을 구하기
 
-SELECT bbs.member_seq
-FROM bbs
-WHERE (SELECT bbs.email, member.email
-       FROM bbs,
-            member
-       WHERE bbs.email = member.email);
+SELECT * FROM bbs;
 
-Insert
+
