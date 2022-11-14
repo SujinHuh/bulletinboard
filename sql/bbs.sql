@@ -23,4 +23,4 @@ CREATE TABLE bbs
 
 SELECT * FROM bbs;
 
-
+DELETE FROM bbs;

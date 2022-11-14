@@ -18,30 +18,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>jhon@email.com</td>
-                    <td>USA</td>
-                    <td>123</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>mark@email.com</td>
-                    <td>UK</td>
-                    <td>456</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>jacob@email.com</td>
-                    <td>AU</td>
-                    <td>789</td>
-                </tr>
+                <td th:if="${#lists.isEmpty(list)}">게시글이 없습니다.</td>
+                <td th:if="${!#lists.isEmpty(list)}">게시글 </td>
+                <div class="list-group" th:if="${!#lists.isEmpty(list)}">
+
+                </div>
                 </tbody>
             </table>
         </div>
