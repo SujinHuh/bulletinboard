@@ -1,9 +1,8 @@
 'use strict';
 
 import TodoApi from '../todo/todoApi.js';
-import axios from '../common/axios.js';
 
-class Index {
+class Todo {
 
     constructor() {
         this.dom = {
@@ -58,6 +57,6 @@ class Index {
 
 (() => {
 
-    new Index();
+    new Todo();
 
 })();

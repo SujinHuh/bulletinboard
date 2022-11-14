@@ -1,5 +1,6 @@
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
+console.log('axios !!!');
 function createCommonjsModule(fn) {
     var module = { exports: {} };
     return fn(module, module.exports), module.exports;
