@@ -24,3 +24,6 @@ CREATE TABLE bbs
 SELECT * FROM bbs;
 
 DELETE FROM bbs;
+Select seq, title, name, cnt, create_date FROM bbs Where bbs_cd = 'FR' AND delete_yn = 'N' order by seq DESC;
+
+
