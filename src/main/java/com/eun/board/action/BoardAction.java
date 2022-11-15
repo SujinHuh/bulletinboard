@@ -32,17 +32,10 @@ public class BoardAction {
     }
 
     @PostMapping(value="/freeboard/list")
-    @ResponseBody public ResponseVo list(Model model){
+    @ResponseBody public ResponseVo list(String temp){
         ResponseVo response = new ResponseVo();
-        List<Bbs> list = new ArrayList<>();
 
-        for(int i = 0; i < 10; i++){
-            Bbs bbs = new Bbs();
-            bbs.setSeq(i);
-            bbs.setTitle(i + "title");
-            bbs.setContent(i + "content");
-            list.add(bbs);
-        }
+        List<Bbs> list = boardService.getList();
 
         response.setCode(ResponseCodes.SUCCESS.getCode());
         response.setMessages(ResponseCodes.SUCCESS.getMessage());

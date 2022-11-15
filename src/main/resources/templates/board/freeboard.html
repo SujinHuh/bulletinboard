@@ -14,15 +14,10 @@
                     <th scope="col">글쓴이</th>
                     <th scope="col">작성시간</th>
                     <th scope="col">조회수</th>
-                    <th scope="col">좋아요</th>
                 </tr>
                 </thead>
-                <tbody>
-                <td th:if="${#lists.isEmpty(list)}">게시글이 없습니다.</td>
-                <td th:if="${!#lists.isEmpty(list)}">게시글 </td>
-                <div class="list-group" th:if="${!#lists.isEmpty(list)}">
+                <tbody id="listArea">
 
-                </div>
                 </tbody>
             </table>
         </div>

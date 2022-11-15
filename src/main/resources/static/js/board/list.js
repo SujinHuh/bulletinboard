@@ -11,22 +11,33 @@ class List {
         };
 
         this.init();
+        this.eventBind();
     }
 
     init() {
         console.log('init!!');
-        this.eventBind();
+        this.getList();
     }
 
     eventBind() {
         console.log('eventBind!!');
-        this.getList();
     }
 
     getList() {
+        let a = document.getElementById('listArea');
         axios.post('/freeboard/list')
             .then((res) => {
+                let list = res.data.data;
+
                 console.log(res);
+                console.log(res.data);
+                console.log(res.data.data);
+                console.log(res.data.data[0]);
+
+                for(let i = 0; i < list.length; i++){
+                    a.append(`<td>${list[i].seq}</td>`);
+                }
+
             })
             .catch((res) => {
                 console.log(res);
