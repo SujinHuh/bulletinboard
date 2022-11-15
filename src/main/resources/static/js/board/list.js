@@ -6,9 +6,7 @@ class List {
 
     constructor(type) {
         this.type = type;
-        this.dom = {
-
-        };
+        this.dom = {};
 
         this.init();
         this.eventBind();
@@ -34,8 +32,10 @@ class List {
                 console.log(res.data.data);
                 console.log(res.data.data[0]);
 
-                for(let i = 0; i < list.length; i++){
-                    a.append(`<td>${list[i].seq}</td>`);
+                for (let i = 0; i < list.length; i++) {
+                    a.insertAdjacentHTML("beforeend", `<td>${list[i].seq}</td><td>${list[i].title}</td>
+                                           <td>${list[i].name}</td><td>${list[i].createDate}</td><td>${list[i].cnt}</td>`);
+
                 }
 
             })
