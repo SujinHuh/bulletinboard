@@ -20,8 +20,9 @@ public class Endpoint {
 
     // todo
 
-    public static final String TODO_ADD = "/todo/add";
     public static final String TODO_LIST = "/todo/list";
+    public static final String TODO_ADD = "/todo/add";
+    public static final String TODO_MODIFY = "/todo/modify";
 
     public static final String REDIRECT = "redirect:";
     /**

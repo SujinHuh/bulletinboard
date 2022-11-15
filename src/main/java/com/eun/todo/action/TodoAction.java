@@ -73,4 +73,23 @@ public class TodoAction {
         return response;
     }
 
+    @PostMapping(value = Endpoint.TODO_MODIFY)
+    @ResponseBody public ResponseVo modify(@RequestBody Todo param, Authentication authentication) {
+        ResponseVo response = new ResponseVo();
+
+        // 세션에서 유저정보 확인
+        UserDetail user = (UserDetail) authentication.getPrincipal();
+        param.setEmail(user.getUsername());
+//        param.setEmail(user.getMember().getEmail());
+
+        // 1.param 밸리데이션
+        log.info("param >>> {}", param.toString());
+        log.info("user >>> {}", user.getMember().toString());
+
+        response.setCode(ResponseCodes.SUCCESS.getCode());
+        response.setMessages(ResponseCodes.SUCCESS.getMessage());
+
+        return response;
+    }
+
 }
