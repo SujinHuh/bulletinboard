@@ -32,10 +32,10 @@ class List {
                 console.log(res.data.data);
                 console.log(res.data.data[0]);
 
+                //리터럴 탬플릿 문제 ,html 문법 문제
                 for (let i = 0; i < list.length; i++) {
-                    a.insertAdjacentHTML("beforeend", `<td>${list[i].seq}</td><td>${list[i].title}</td>
-                                           <td>${list[i].name}</td><td>${list[i].createDate}</td><td>${list[i].cnt}</td>`);
-
+                    a.insertAdjacentHTML("beforeend", `<tr><td>${list[i].seq}</td><td>${list[i].title}</td>
+                                                                <td>${list[i].name}</td><td>${list[i].createDate}</td><td>${list[i].cnt}</td></tr>`);
                 }
 
             })
