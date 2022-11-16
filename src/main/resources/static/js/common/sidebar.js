@@ -11,9 +11,9 @@ class Sidebar {
         }
 
         this.dom = {
-            'content' : document.querySelector ('.content'),
-            'sidebar' : document.querySelector ('.sidebar'),
-            'sidebarToggler' : document.querySelector ('.sidebar-toggler'),
+            content : document.querySelector ('.content'),
+            sidebar : document.querySelector ('.sidebar'),
+            sidebarToggler : document.querySelector ('.sidebar-toggler'),
         };
 
         this.eventBind();
