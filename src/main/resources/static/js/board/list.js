@@ -26,21 +26,33 @@ class List {
         axios.post('/freeboard/list')
             .then((res) => {
                 let list = res.data.data;
-
                 console.log(res);
                 console.log(res.data);
                 console.log(res.data.data);
                 console.log(res.data.data[0]);
-
-                //리터럴 탬플릿 문제 ,html 문법 문제
                 for (let i = 0; i < list.length; i++) {
-                    a.insertAdjacentHTML("beforeend", `<tr><td>${list[i].seq}</td><td>${list[i].title}</td>
-                                                                <td>${list[i].name}</td><td>${list[i].createDate}</td><td>${list[i].cnt}</td></tr>`);
+                    let div = `<tr>`+
+                                    `<td>${list[i].seq}</td>`+
+                                    `<td><a href="/board/view/${list[i].seq}">${list[i].title}</a></td>`+
+                                    `<td class="title_td" data-seq="${list[i].seq}">${list[i].title}</a></td>`+
+                                    `<td>${list[i].name}</td>`+
+                                    `<td>${list[i].createDate}</td>`+
+                                    `<td>${list[i].cnt}</td>`+
+                                `</tr>`;
+                    a.insertAdjacentHTML("beforeend", div);
                 }
+
+                let array = [...document.getElementsByClassName('title_td')];
+                array.forEach((value, index) => {
+                    value.addEventListener('click', (e) => {
+                        location.href = '/board/view/' + e.currentTarget.getAttribute('data-seq')
+                    })
+                })
             })
             .catch((res) => {
                 console.log(res);
             });
+
     }
 }
 

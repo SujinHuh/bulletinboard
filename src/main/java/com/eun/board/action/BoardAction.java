@@ -7,15 +7,11 @@ import com.eun.constants.ResponseCodes;
 import com.eun.constants.ResponseVo;
 import com.eun.member.vo.Member;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -28,7 +24,7 @@ public class BoardAction {
     /** 게시판 글 list */
     @GetMapping(value="/freeboard/list")
     public String list(){
-        return "/board/freeboard";
+        return "/board/list";
     }
 
     @PostMapping(value="/freeboard/list")
@@ -43,9 +39,9 @@ public class BoardAction {
         return response;
     }
 
-    @GetMapping(value="/freeboard/content")
+    @GetMapping(value="/freeboard/add")
     public String add(){
-        return "/board/content";
+        return "/board/add";
     }
 
     /**게시판 insert */
@@ -78,13 +74,31 @@ public class BoardAction {
         return response;
     }
 
-    /**게시판 글 보기*/
-    @GetMapping(value = "/freeboard/contentview")
-    public String view(){return "/board/contentview";}
+    /**게시판 글 view */
+    @GetMapping(value = "/board/view/{seq}")
+    public String view(){return "/board/view";}
 
+    // 비동기로 게시글 가져오기
+    @PostMapping(value = "/board/view/{seq}")
+    @ResponseBody public ResponseVo view(@PathVariable String seq, Authentication authentication){
+        ResponseVo response = new ResponseVo();
+        UserDetail user = (UserDetail) authentication.getPrincipal();
+        Member member = user.getMember();
+
+        log.info(seq);
+        // 1.게시글이 없을 경우 (validation 처리)
+
+        // 2.게시글이 privetYN -> Y경우 (나와 관리자만 보여야함)
+
+        // 3.게시글이 내가 작석한 게시글일 경우 (수정/삭제 버튼)
+        log.info(member.toString());
+
+
+
+        return response;
+    }
 
 }
-
 
 
 
