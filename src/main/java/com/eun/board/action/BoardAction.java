@@ -78,6 +78,9 @@ public class BoardAction {
         return response;
     }
 
+    /**게시판 글 보기*/
+    @GetMapping(value = "/freeboard/contentview")
+    public String view(){return "/board/contentview";}
 
 
 }

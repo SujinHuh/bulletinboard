@@ -37,7 +37,6 @@ class List {
                     a.insertAdjacentHTML("beforeend", `<tr><td>${list[i].seq}</td><td>${list[i].title}</td>
                                                                 <td>${list[i].name}</td><td>${list[i].createDate}</td><td>${list[i].cnt}</td></tr>`);
                 }
-
             })
             .catch((res) => {
                 console.log(res);
