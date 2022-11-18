@@ -20,7 +20,7 @@ class Sidebar {
     }
     //토글?
     eventBind() {
-        this.dom.sidebarToggler.addEventListener('click', this.toggle.bind(this));
+        this.dom.sidebarToggler.addEventListener('click', () => this.toggle());
     }
 
     toggle() {

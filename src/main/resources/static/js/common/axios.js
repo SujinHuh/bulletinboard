@@ -1661,7 +1661,7 @@ var axios = createCommonjsModule(function (module, exports) {
                     /**
                      * Syntactic sugar for invoking a function and expanding an array for arguments.
                      *
-                     * Common use case would be to use `Function.prototype.apply`.
+                     * Modal use case would be to use `Function.prototype.apply`.
                      *
                      *  ```js
                      *  function f(x, y, z) {}

@@ -5,6 +5,7 @@ import axios from '/js/common/axios.js';
 class Login {
 
     constructor() {
+        console.log('init')
         this.dom = {
             // input
             email : document.getElementById('email'),
@@ -15,16 +16,12 @@ class Login {
             signUpBt : document.getElementById('signUpBt'),
         };
 
-        this.init();
-    }
-
-    init() {
         this.eventBind();
     }
 
     eventBind() {
-        this.dom.loginBt.addEventListener('click', this.login.bind(this));
-        this.dom.signUpBt.addEventListener('click', function() { location.href = '/member/create'});
+        this.dom.loginBt.addEventListener('click', () => this.login());
+        this.dom.signUpBt.addEventListener('click', () => location.href = '/member/create');
     }
 
     login(e) {

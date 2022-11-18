@@ -1,6 +1,7 @@
 'use strict';
 
 import axios from '/js/common/axios.js';
+import Modal from '/js/common/modal.js';
 
 class Create {
 
@@ -14,18 +15,29 @@ class Create {
             password : document.getElementById('password'),
         };
 
-        this.init();
-    }
+        let success = {
+            title: '회원가입',
+            body: '회원가입에 성공하였습니다. \n 로그인 해주세요.',
+            callback: [{
+                        name : '완료',
+                        callback : () => {location.href = '/member/login';}
+                    }]
+        }
 
-    init() {
-        console.log('init!!');
+        let fail = {
+            title: '회원가입',
+            body: '회원가입에 실패하였습니다. \n 확인 해주세요.'
+        }
+
+        this.successModal = new Modal(success);
+        this.failModal = new Modal(fail);
+
         this.eventBind();
     }
 
     eventBind() {
-        console.log('eventBind!!');
-        this.dom.signUpBt.addEventListener('click', this.create.bind(this));
-        this.dom.loginBt.addEventListener('click', function() { location.href = '/member/login'});
+        this.dom.signUpBt.addEventListener('click', () => this.create);
+        this.dom.loginBt.addEventListener('click', () => location.href = '/member/login');
     }
 
     create() {
@@ -35,18 +47,13 @@ class Create {
             password : this.dom.password.value,
         };
 
-        console.log(param);
-
         axios.post('/member/create', param)
             .then((res) => {
                 console.log(res);
                 if(res.data.code === '0000'){
-                    alert('회원가입에 성공하였습니다. \n' +
-                        '로그인 해주세요.');
-
-                    location.href = '/member/login';
+                    this.successModal.open(this.successModal.getUUID());
                 }else{
-                    alert('실패하였습니다.');
+                    this.failModal.open(this.successModal.getUUID());
                 }
             })
             .catch((res) => {

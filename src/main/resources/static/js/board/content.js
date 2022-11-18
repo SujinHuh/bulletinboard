@@ -21,7 +21,7 @@ class Content{
     }
 
     eventBind() {
-        this.dom.contentAddBt.addEventListener('click', this.addContent.bind(this));
+        this.dom.contentAddBt.addEventListener('click', () => this.addContent());
     }
 
     addContent(e) {
