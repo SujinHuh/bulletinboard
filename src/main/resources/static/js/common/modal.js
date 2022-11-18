@@ -57,8 +57,8 @@ class Modal {
         this.dom.modalCloseBt2 = document.getElementById(this.modalId + 'CloseBt2');
 
         // dom event bind
-        this.dom.modalCloseBt1.addEventListener('click', () => this.close(this.getUUID()));
-        this.dom.modalCloseBt2.addEventListener('click', () => this.close(this.getUUID()));
+        this.dom.modalCloseBt1.addEventListener('click', () => this.close());
+        this.dom.modalCloseBt2.addEventListener('click', () => this.close());
 
         callback.forEach((item, index) => {
             if(item.name === undefined && item.callback === undefined){
@@ -67,9 +67,9 @@ class Modal {
             let id = this.modalId + 'Callback' + index;
             let bt = `<button type="button" class="btn btn-secondary" id="${id}">${item.name}</button>`;
             this.dom.modalFooter.insertAdjacentHTML('afterbegin', bt);
-            document.getElementById(id).addEventListener('click', () => {
-                item.callback;
-                this.close(this.getUUID());
+            document.getElementById(id).addEventListener('click', (e) => {
+                item.callback(this.target);
+                this.close();
             });
         })
 
@@ -78,18 +78,36 @@ class Modal {
     setBody(body) {
         this.dom.modalBody.innerHTML = body;
     }
+
     getUUID() {
         return this.modalId || self.crypto.randomUUID();
     }
 
-    open(id) {
-        document.getElementById('body').className = 'modal-open';
-        document.getElementById(id).style.display = 'block';
+    open(e) {
+        if(e !== undefined){
+            this.target = e.currentTarget;
+        }
+        this.dom.body.className = 'modal-open'
+        this.dom.modal.style.display = 'block';
     }
 
-    close(id) {
-        document.getElementById('body').className = '';
-        document.getElementById(id).style.display = 'none';
+    close(e) {
+        this.dom.modal.style.display = 'none';
+
+        let isModal = true;
+
+        // 모달이 열려있으면 body에서 modal-openclass를 지우면 안된다.
+        // callback modal 오픈이 있을경우 반응이 느려서 셋타임아웃으로 시간 조절.
+        setTimeout(() => {
+            [...document.getElementsByClassName('modal')].forEach((item, index) => {
+                if(item.style.display === 'block'){
+                    isModal = false;
+                };
+            });
+            if(isModal){
+                this.dom.body.className = ''
+            }
+        }, 300);
     }
 }
 

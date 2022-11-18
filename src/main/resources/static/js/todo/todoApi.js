@@ -30,27 +30,32 @@ class TodoApi {
         console.log('todo constructor!!');
         this.setModal();
         this.eventBind();
-
     }
 
     setModal() {
-        let param = {
+        let verifyParam = {
             title: 'TODO',
             body: '작업을 골라주세요..',
             callback: [{
                 name : '완료',
-                callback : () => { alert('완료'); }
+                callback : (target) => this.modify('success', target)
             },{
                 name : '삭제',
-                callback : () => { alert('삭제');}
+                callback : (target) => this.modify('delete', target)
             }]
         }
+        this.verifyModal = new Modal(verifyParam);
 
-        this.modal = new Modal(param);
+        let notiParam = {
+            title: 'TODO',
+            body: '작업을 골라주세요..',
+        }
+
+        this.notiModal = new Modal(notiParam);
     }
 
     eventBind() {
-        this.prop.el.id.todoInputBt.addEventListener('click', () => this.addTodo);
+        this.prop.el.id.todoInputBt.addEventListener('click', () => this.addTodo());
     }
 
     listEventBind() {
@@ -59,7 +64,7 @@ class TodoApi {
         // Array 객체
         // let btArray = Array.from(this.prop.el.class.todoBt);
         btArray.forEach((item, index) => {
-            item.addEventListener('click', (e) => this.modal.open(this.modal.getUUID()) );
+            item.addEventListener('click', (e) => this.verifyModal.open(e) );
         });
     }
 
@@ -81,32 +86,33 @@ class TodoApi {
         axios.post('/todo/add', {text: this.prop.el.id.todoInput.value})
             .then((res) => {
                 if (res.data.code === '0000') {
-                    alert('추가 완료.');
+                    this.notiModal.setBody('추가 완료');
                     // 입력한 인풋 초기화
                     this.prop.el.id.todoInput.value = '';
                     // 동적으로 붙여줘야됨.
                     this.prop.el.id.todoList.insertAdjacentHTML('beforeend', this.prop.callback.rendering(res.data.data));
                     // 동적이벤트 바인딩
                     let length = this.prop.el.class.todoBt.length - 1;
-                    this.prop.el.class.todoBt[length].addEventListener('click', (e) => this.modal.open(this.modal.getUUID()) );
+                    this.prop.el.class.todoBt[length].addEventListener('click', (e) => this.verifyModal.open(e) );
                 } else {
-                    alert('추가 실패.');
+                    this.notiModal.setBody('추가 실패');
                 }
+                this.notiModal.open();
             })
             .catch((res) => {
                 console.log(res);
             });
     }
 
-    modify(e) {
-        console.log(e.currentTarget);
-        axios.post('/todo/modify', )
+    modify(type, target) {
+        axios.post(`/todo/modify/${type}/${target.dataset.seq}`)
             .then((res) => {
                 if (res.data.code === '0000') {
-                    alert('수정 완료.');
+                    this.notiModal.setBody('수정 완료.');
                 } else {
-                    alert('수정 실패.');
+                    this.notiModal.setBody('수정 실패.');
                 }
+                this.notiModal.open();
             })
             .catch((res) => {
                 console.log(res);

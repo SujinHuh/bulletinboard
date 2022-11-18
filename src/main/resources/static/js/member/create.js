@@ -20,7 +20,7 @@ class Create {
             body: '회원가입에 성공하였습니다. \n 로그인 해주세요.',
             callback: [{
                         name : '완료',
-                        callback : () => {location.href = '/member/login';}
+                        callback : () => location.href = '/member/login'
                     }]
         }
 
@@ -36,7 +36,7 @@ class Create {
     }
 
     eventBind() {
-        this.dom.signUpBt.addEventListener('click', () => this.create);
+        this.dom.signUpBt.addEventListener('click', () => this.create());
         this.dom.loginBt.addEventListener('click', () => location.href = '/member/login');
     }
 
@@ -51,9 +51,9 @@ class Create {
             .then((res) => {
                 console.log(res);
                 if(res.data.code === '0000'){
-                    this.successModal.open(this.successModal.getUUID());
+                    this.successModal.open();
                 }else{
-                    this.failModal.open(this.successModal.getUUID());
+                    this.failModal.open();
                 }
             })
             .catch((res) => {

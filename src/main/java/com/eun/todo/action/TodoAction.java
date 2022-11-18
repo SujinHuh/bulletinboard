@@ -10,10 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -73,17 +70,18 @@ public class TodoAction {
         return response;
     }
 
-    @PostMapping(value = Endpoint.TODO_MODIFY)
-    @ResponseBody public ResponseVo modify(@RequestBody Todo param, Authentication authentication) {
+    @PostMapping(value = "/todo/modify/{type}/{seq}")
+    @ResponseBody public ResponseVo modify(@PathVariable String type, @PathVariable String seq, Authentication authentication) {
         ResponseVo response = new ResponseVo();
 
         // 세션에서 유저정보 확인
         UserDetail user = (UserDetail) authentication.getPrincipal();
-        param.setEmail(user.getUsername());
+//        param.setEmail(user.getUsername());
 //        param.setEmail(user.getMember().getEmail());
 
         // 1.param 밸리데이션
-        log.info("param >>> {}", param.toString());
+        log.info("param >>> {}", type);
+        log.info("param >>> {}", seq);
         log.info("user >>> {}", user.getMember().toString());
 
         response.setCode(ResponseCodes.SUCCESS.getCode());
