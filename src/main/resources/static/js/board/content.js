@@ -1,6 +1,6 @@
 'use strict';
 
-import axios from "../common/axios.js";
+import axios from '/js/common/axios.js';
 
 class Content{
 

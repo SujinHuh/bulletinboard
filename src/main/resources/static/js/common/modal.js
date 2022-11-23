@@ -27,21 +27,21 @@ class Modal {
             body: document.getElementById('body'),
         }
 
-        this.el = `<div id="${this.modalId}" class="modal" tabindex="-1" style="top:30%;">`                                     +
-                    `<div class="modal-dialog">`                                                                                +
-                        `<div class="modal-content">`                                                                           +
-                            `<div class="modal-header">`                                                                        +
-                                `<div class="modal-title">${title}</div>`                                                       +
-                                    `<button type="button" class="btn-close" id="${this.modalId}CloseBt1"></button>`            +
-                                `</div>`                                                                                        +
-                            `<div class="modal-body" id="${this.modalId}Body">`                                                 +
-                                `${body}`                                                                                       +
-                            `</div>`                                                                                            +
-                            `<div class="modal-footer" id="${this.modalId}Footer">`                                             +
-                                `<button type="button" class="btn btn-secondary" id="${this.modalId}CloseBt2">Close</button>`   +
-                            `</div>`                                                                                            +
-                            `</div>`                                                                                            +
-                        `</div>`                                                                                                +
+        this.el = `<div id="${this.modalId}" class="modal" tabindex="-1" style="top:30%;">`                                         +
+                        `<div class="modal-dialog">`                                                                                +
+                            `<div class="modal-content">`                                                                           +
+                                `<div class="modal-header">`                                                                        +
+                                    `<div class="modal-title">${title}</div>`                                                       +
+                                        `<button type="button" class="btn-close" id="${this.modalId}CloseBt1"></button>`            +
+                                `</div>`                                                                                            +
+                                `<div class="modal-body" id="${this.modalId}Body">`                                                 +
+                                    `${body}`                                                                                       +
+                                `</div>`                                                                                            +
+                                `<div class="modal-footer" id="${this.modalId}Footer">`                                             +
+                                    `<button type="button" class="btn btn-secondary" id="${this.modalId}CloseBt2">Close</button>`   +
+                                `</div>`                                                                                            +
+                            `</div>`                                                                                                +
+                        `</div>`                                                                                                    +
                     `</div>`;
 
         console.log('Modal constructor');

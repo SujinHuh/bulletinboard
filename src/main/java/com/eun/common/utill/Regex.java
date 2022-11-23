@@ -1,4 +1,4 @@
-package com.eun.common.property;
+package com.eun.common.utill;
 
 /**
  * Regex

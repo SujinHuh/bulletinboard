@@ -1,7 +1,6 @@
 'use strict';
 
-import TodoApi from '../todo/todoApi.js';
-import axios from '../common/axios.js';
+import TodoApi from 'js//todo/todoApi.js';
 
 class Index {
 

@@ -1,7 +1,7 @@
 'use strict';
 
-import axios from '../common/axios.js';
-import Modal from '../common/modal.js';
+import axios from '/js/common/axios.js';
+import Modal from '/js/common/modal.js';
 
 class TodoApi {
 
