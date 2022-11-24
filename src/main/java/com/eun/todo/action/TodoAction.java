@@ -39,7 +39,7 @@ public class TodoAction {
         response.setData(list);
 
         response.setCode(ResponseCodes.SUCCESS.getCode());
-        response.setMessages(ResponseCodes.SUCCESS.getMessage());
+        response.setMessage(ResponseCodes.SUCCESS.getMessage());
 
         return response;
     }
@@ -65,7 +65,7 @@ public class TodoAction {
         }
 
         response.setCode(ResponseCodes.SUCCESS.getCode());
-        response.setMessages(ResponseCodes.SUCCESS.getMessage());
+        response.setMessage(ResponseCodes.SUCCESS.getMessage());
 
         return response;
     }
@@ -85,7 +85,7 @@ public class TodoAction {
         log.info("user >>> {}", user.getMember().toString());
 
         response.setCode(ResponseCodes.SUCCESS.getCode());
-        response.setMessages(ResponseCodes.SUCCESS.getMessage());
+        response.setMessage(ResponseCodes.SUCCESS.getMessage());
 
         return response;
     }

@@ -34,7 +34,7 @@ public class BoardAction {
         List<Bbs> list = boardService.getList();
 
         response.setCode(ResponseCodes.SUCCESS.getCode());
-        response.setMessages(ResponseCodes.SUCCESS.getMessage());
+        response.setMessage(ResponseCodes.SUCCESS.getMessage());
         response.setData(list);
         return response;
     }
@@ -69,7 +69,7 @@ public class BoardAction {
         }
 
         response.setCode(ResponseCodes.SUCCESS.getCode());
-        response.setMessages(ResponseCodes.SUCCESS.getMessage());
+        response.setMessage(ResponseCodes.SUCCESS.getMessage());
 
         return response;
     }

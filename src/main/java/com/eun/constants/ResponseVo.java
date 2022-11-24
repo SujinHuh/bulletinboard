@@ -2,7 +2,6 @@ package com.eun.constants;
 
 import lombok.*;
 import org.apache.tomcat.util.buf.StringUtils;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 
 import java.util.List;
@@ -17,13 +16,13 @@ import java.util.stream.Collectors;
 public class ResponseVo {
 
     private String code = ResponseCodes.ERROR.getCode();
-    private String messages = ResponseCodes.ERROR.getMessage();
+    private String message = ResponseCodes.ERROR.getMessage();
     private Object data;
 
     public static ResponseVo successData(Object data) {
         ResponseVo responseVo = new ResponseVo();
         responseVo.setCode(ResponseCodes.SUCCESS.getCode());
-        responseVo.setMessages(ResponseCodes.SUCCESS.getMessage());
+        responseVo.setMessage(ResponseCodes.SUCCESS.getMessage());
         responseVo.setData(data);
         return responseVo;
     }
@@ -35,7 +34,7 @@ public class ResponseVo {
         List<String> errorMessages = errors.getFieldErrors().stream().map( t -> "[" + t.getField() + ":" + t.getDefaultMessage() + "]").collect(Collectors.toList());
         ResponseVo responseVo = new ResponseVo();
         responseVo.setCode(ResponseCodes.ERROR.getCode());
-        responseVo.setMessages(StringUtils.join(errorMessages, ','));
+        responseVo.setMessage(StringUtils.join(errorMessages, ','));
         return responseVo;
     }
 }

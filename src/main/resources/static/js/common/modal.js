@@ -25,6 +25,7 @@ class Modal {
 
         this.dom = {
             body: document.getElementById('body'),
+            modalBg: document.getElementById('modalBg'),
         }
 
         this.el = `<div id="${this.modalId}" class="modal" tabindex="-1" style="top:30%;">`                                         +
@@ -38,7 +39,7 @@ class Modal {
                                     `${body}`                                                                                       +
                                 `</div>`                                                                                            +
                                 `<div class="modal-footer" id="${this.modalId}Footer">`                                             +
-                                    `<button type="button" class="btn btn-secondary" id="${this.modalId}CloseBt2">Close</button>`   +
+                                    `<button type="button" class="btn btn-secondary" id="${this.modalId}CloseBt2">닫기</button>`     +
                                 `</div>`                                                                                            +
                             `</div>`                                                                                                +
                         `</div>`                                                                                                    +
@@ -47,7 +48,7 @@ class Modal {
         console.log('Modal constructor');
 
         // body 부분에 동적으로 dom 생성
-        this.dom.body.insertAdjacentHTML('beforeend', this.el);
+        this.dom.modalBg.insertAdjacentHTML('beforebegin', this.el);
 
         // dom 생성 후 캐싱처리
         this.dom.modal = document.getElementById(this.modalId);
@@ -69,7 +70,9 @@ class Modal {
             this.dom.modalFooter.insertAdjacentHTML('afterbegin', bt);
             document.getElementById(id).addEventListener('click', (e) => {
                 item.callback(this.target);
-                this.close();
+                setTimeout(() => {
+                    this.close();
+                }, 100)
             });
         })
 
@@ -89,6 +92,7 @@ class Modal {
         }
         this.dom.body.className = 'modal-open'
         this.dom.modal.style.display = 'block';
+        this.dom.modalBg.style.display = 'block';
     }
 
     close(e) {
@@ -99,13 +103,16 @@ class Modal {
         // 모달이 열려있으면 body에서 modal-openclass를 지우면 안된다.
         // callback modal 오픈이 있을경우 반응이 느려서 셋타임아웃으로 시간 조절.
         setTimeout(() => {
-            [...document.getElementsByClassName('modal')].forEach((item, index) => {
+            let modalArray = Array.from(document.getElementsByClassName('modal'));
+
+            modalArray.forEach((item, index) => {
                 if(item.style.display === 'block'){
                     isModal = false;
-                };
+                }
             });
             if(isModal){
-                this.dom.body.className = ''
+                this.dom.body.className = '';
+                this.dom.modalBg.style.display = 'none';
             }
         }, 300);
     }

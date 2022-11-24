@@ -1,5 +1,6 @@
 package com.eun.common.exception;
 
+import com.eun.constants.ResponseCodes;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -12,19 +13,13 @@ import org.springframework.http.HttpStatus;
 @Getter
 public class BusinessException extends RuntimeException {
 
-    private final HttpStatus httpStatus;
     private final String message;
     private final String errorCode;
 
-    public BusinessException(final String message, final HttpStatus httpStatus) {
-        this.message = message;
-        this.httpStatus = httpStatus;
-        this.errorCode = null;
+    public BusinessException(final ResponseCodes codes) {
+        super(codes.getCode() + codes.getMessage());
+        this.message = codes.getMessage();
+        this.errorCode = codes.getMessage();
     }
 
-    public BusinessException(final String message, final String code, final HttpStatus httpStatus) {
-        this.message = message;
-        this.httpStatus = httpStatus;
-        this.errorCode = code;
-    }
 }

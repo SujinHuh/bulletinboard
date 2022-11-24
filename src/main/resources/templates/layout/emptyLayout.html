@@ -8,10 +8,14 @@
 
     <th:block layout:fragment="container"></th:block>
 
-<!-- script -->
-<th:block th:replace="/layout/fragments/script :: scriptFragment"></th:block>
+    <!-- modal -->
+    <div id="modalBg" class="modal-backdrop show" style="display: none;"></div>
 
-<!-- script -->
-<th:block layout:fragment="customScript"></th:block>
+    <!-- script -->
+    <th:block th:replace="/layout/fragments/script :: scriptFragment"></th:block>
+
+    <!-- script -->
+    <th:block layout:fragment="customScript"></th:block>
+
 </body>
 </html>

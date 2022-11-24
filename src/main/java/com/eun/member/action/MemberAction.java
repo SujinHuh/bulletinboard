@@ -1,7 +1,9 @@
 package com.eun.member.action;
 
+import com.eun.common.exception.BusinessException;
 import com.eun.common.property.Endpoint;
 import com.eun.common.property.Template;
+import com.eun.common.utill.StringUtils;
 import com.eun.constants.ResponseCodes;
 import com.eun.constants.ResponseVo;
 import com.eun.member.service.MemberService;
@@ -22,8 +24,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class MemberAction {
 
-    @Autowired MemberService memberService;
     @Autowired PasswordEncoder passwordEncoder;
+    @Autowired MemberService memberService;
+
 
     // 페이지 이동
     @GetMapping(value = Endpoint.LOGIN)
@@ -57,12 +60,19 @@ public class MemberAction {
     @ResponseBody public ResponseVo create(@RequestBody Member param) {
         ResponseVo response = new ResponseVo();
 
+        if( StringUtils.isEmpty(param.getName())
+                || StringUtils.isEmpty(param.getEmail())
+                || StringUtils.isEmpty(param.getPassword()) ) {
+            log.info("member Create 필수값 누락");
+            throw new BusinessException(ResponseCodes.REQUIRED_PARAMETERS);
+        }
+        // 비밀번호 암호화
         param.setPassword(passwordEncoder.encode(param.getPassword()));
 
         int result = memberService.create(param);
 
         response.setCode(ResponseCodes.SUCCESS.getCode());
-        response.setMessages(ResponseCodes.SUCCESS.getMessage());
+        response.setMessage(ResponseCodes.SUCCESS.getMessage());
 
         if(0 < result){
             response.setData("{result : true}");

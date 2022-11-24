@@ -29,8 +29,8 @@ class Create {
             body: '회원가입에 실패하였습니다. \n 확인 해주세요.'
         }
 
-        this.successModal = new Modal(success);
         this.failModal = new Modal(fail);
+        this.successModal = new Modal(success);
 
         this.eventBind();
     }
@@ -47,17 +47,38 @@ class Create {
             password : this.dom.password.value,
         };
 
+        // if(param.name === ''){
+        //     this.failModal.setBody('name 값 확인');
+        //     this.failModal.open();
+        //     return;
+        // }
+        //
+        // if(param.email === ''){
+        //     this.failModal.setBody('email 값 확인');
+        //     this.failModal.open();
+        //     return;
+        // }
+        //
+        // if(param.password === ''){
+        //     this.failModal.setBody('password 값 확인');
+        //     this.failModal.open();
+        //     return;
+        // }
+
         axios.post('/member/create', param)
             .then((res) => {
                 console.log(res);
                 if(res.data.code === '0000'){
                     this.successModal.open();
                 }else{
+                    this.failModal.setBody(res.data.message);
                     this.failModal.open();
                 }
             })
             .catch((res) => {
-                console.log(res);
+                console.log(res.response);
+                this.failModal.setBody(res.response.data.message);
+                this.failModal.open();
             });
     }
 }

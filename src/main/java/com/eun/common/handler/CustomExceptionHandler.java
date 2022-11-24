@@ -1,12 +1,18 @@
 package com.eun.common.handler;
 
 import com.eun.common.exception.BusinessException;
-import com.eun.common.property.Endpoint;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * CustomExceptionHandler
@@ -22,10 +28,19 @@ public class CustomExceptionHandler {
      * 프로젝트 내에서 직접 구현했을 경우 발생되는 공통 exception
      */
     @ExceptionHandler(BusinessException.class)
-    public String handleBusinessException(BusinessException e, RedirectAttributes redirectAttributes) {
-        log.error("BusinessException ", e);
-        redirectAttributes.addFlashAttribute("status", e.getHttpStatus().name());
-        redirectAttributes.addFlashAttribute("statusCode", e.getHttpStatus().value());
-        return Endpoint.redirect(Endpoint.ERROR);
+    public ResponseEntity<Map<String, Object>> handleBusinessException(BusinessException e, RedirectAttributes redirectAttributes) {
+        Map<String, Object> result = new HashMap<>();
+
+        result.put("code", e.getErrorCode());
+        result.put("message", e.getMessage());
+
+        return new ResponseEntity<Map<String, Object>>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException e) {
+
+        log.info("handleNoHandlerFoundException!!!!!!!!!!!!!!!");
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 }

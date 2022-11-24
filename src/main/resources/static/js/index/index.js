@@ -1,6 +1,6 @@
 'use strict';
 
-import TodoApi from 'js//todo/todoApi.js';
+import TodoApi from '/js/todo/todoApi.js';
 
 class Index {
 
