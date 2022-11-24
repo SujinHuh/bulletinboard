@@ -26,20 +26,22 @@ class List {
         axios.post('/freeboard/list')
             .then((res) => {
                 let list = res.data.data;
+
                 console.log(res);
                 console.log(res.data);
                 console.log(res.data.data);
                 console.log(res.data.data[0]);
+
                 for (let i = 0; i < list.length; i++) {
                     let div = `<tr>`+
                                     `<td>${list[i].seq}</td>`+
-                                    `<td><a href="/board/view/${list[i].seq}">${list[i].title}</a></td>`+
+                                    // `<td><a href="/board/view/${list[i].seq}">${list[i].title}</a></td>`+
                                     `<td class="title_td" data-seq="${list[i].seq}">${list[i].title}</a></td>`+
                                     `<td>${list[i].name}</td>`+
                                     `<td>${list[i].createDate}</td>`+
                                     `<td>${list[i].cnt}</td>`+
                                 `</tr>`;
-                    a.insertAdjacentHTML("beforeend", div);
+                    a.insertAdjacentHTML("beforeend", div); //js로 dom 요소를 삽입
                 }
 
                 let array = [...document.getElementsByClassName('title_td')];
