@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -46,7 +47,7 @@ public class BoardAction {
 
     /**게시판 insert */
     @PostMapping(value = "/freeboard/add")
-    @ResponseBody public ResponseVo add(@RequestBody Bbs param, Authentication authentication){
+    @ResponseBody public ResponseVo add(@Valid @RequestBody Bbs param, Authentication authentication){
         ResponseVo response = new ResponseVo();
         //스프링시큐리티 자체가 authentication 이객체에 세션을 만듬
         UserDetail user = (UserDetail) authentication.getPrincipal();
@@ -90,7 +91,7 @@ public class BoardAction {
 
         // 2.게시글이 privetYN -> Y경우 (나와 관리자만 보여야함)
 
-        // 3.게시글이 내가 작석한 게시글일 경우 (수정/삭제 버튼)
+        // 3.게시글이 내가 작성한 게시글일 경우 (수정/삭제 버튼)
         log.info(member.toString());
 
 

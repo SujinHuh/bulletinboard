@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @ToString
@@ -11,6 +13,7 @@ public class Bbs {
     private int seq;//seq
     private String bbsCd; //bbs_code
     private String title;//제목
+    @NotNull(message = "게시글을 작성해주세요!")
     private String content; //내용
     private String name;//이름
     private String email;       // 등록자 이메일 or user seq
