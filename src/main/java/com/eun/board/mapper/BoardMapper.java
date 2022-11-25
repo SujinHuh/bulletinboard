@@ -16,4 +16,9 @@ public interface BoardMapper {
 
     @Select("Select seq, title, name, cnt, create_date FROM bbs Where bbs_cd = 'FR' AND delete_yn = 'N' order by seq DESC")
     List<Bbs> getList();
+
+
+    // seq 일치하는
+
+    Bbs getView(String seq);
 }

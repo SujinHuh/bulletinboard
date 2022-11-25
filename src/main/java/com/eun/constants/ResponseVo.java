@@ -27,7 +27,7 @@ public class ResponseVo {
         return responseVo;
     }
 
-    /**
+    /**.
      * validation Error 가 존재할 경우 오류메세지와 함께 리턴
      */
     public static ResponseVo hasErrors(Errors errors) {

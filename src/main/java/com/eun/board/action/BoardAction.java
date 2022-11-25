@@ -8,6 +8,7 @@ import com.eun.constants.ResponseVo;
 import com.eun.member.vo.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -68,7 +69,7 @@ public class BoardAction {
         if(0 < result){
             response.setData(param);
         }
-
+        // 프로세스가 정상적으로 성공을하고 리턴이되면 이결 다시 정상으로 대입시키죠.
         response.setCode(ResponseCodes.SUCCESS.getCode());
         response.setMessage(ResponseCodes.SUCCESS.getMessage());
 
@@ -79,15 +80,26 @@ public class BoardAction {
     @GetMapping(value = "/board/view/{seq}")
     public String view(){return "/board/view";}
 
-    // 비동기로 게시글 가져오기
+    //  BoardAction-view() 3. axios의 요청이 해당컨트롤러로 매핑
+    // parameter로 넘겨준 seq는 PathVariable 어노테이션에 의해 seq에 매핑이됩니다.
     @PostMapping(value = "/board/view/{seq}")
     @ResponseBody public ResponseVo view(@PathVariable String seq, Authentication authentication){
+        // 여기서  부정으로 생성
         ResponseVo response = new ResponseVo();
         UserDetail user = (UserDetail) authentication.getPrincipal();
         Member member = user.getMember();
-
+        // 그러면 해당 seq가지고
         log.info(seq);
+        // 0. seq가지고 게시글을 가져온다
+        Bbs bbs = boardService.getView(seq);
         // 1.게시글이 없을 경우 (validation 처리)
+        if(bbs == null){
+            // 이렇게나 여기서
+            response.setCode("xxxx");
+            response.setMessage("게시글이존재하지않습니다.");
+            response.setData("error");
+            return response;
+        }
 
         // 2.게시글이 privetYN -> Y경우 (나와 관리자만 보여야함)
 
@@ -95,7 +107,9 @@ public class BoardAction {
         log.info(member.toString());
 
 
-
+        // 프로세스가 정상적으로 성공을하고 리턴이되면 이결 다시 정상으로 대입.
+        response.setCode(ResponseCodes.SUCCESS.getCode());
+        response.setMessage(ResponseCodes.SUCCESS.getMessage());
         return response;
     }
 

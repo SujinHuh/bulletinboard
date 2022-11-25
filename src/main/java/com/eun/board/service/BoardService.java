@@ -18,4 +18,6 @@ public class BoardService {
     public List<Bbs> getList(){
         return boardMapper.getList();
     }
+
+    public Bbs getView(String seq) { return boardMapper.getView(seq);}
 }
