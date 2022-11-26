@@ -2,7 +2,8 @@ drop table todo;
 
 CREATE TABLE todo (
     seq             INT NOT NULL AUTO_INCREMENT,
-    email           VARCHAR(20),
+    #email           VARCHAR(20),
+    member_seq      INT,
     text            VARCHAR(500),
     success_yn      VARCHAR(1) default 'N',
     delete_yn       VARCHAR(1) default 'N',

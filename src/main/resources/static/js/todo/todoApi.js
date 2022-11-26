@@ -105,6 +105,8 @@ class TodoApi {
     }
 
     modify(type, target) {
+        console.log(type);
+        console.log(target);
         axios.post(`/todo/modify/${type}/${target.dataset.seq}`)
             .then((res) => {
                 if (res.data.code === '0000') {
@@ -113,9 +115,16 @@ class TodoApi {
                     this.notiModal.setBody('수정 실패.');
                 }
                 this.notiModal.open();
+
+                if(type === 'success'){
+                    document.getElementById('todo')
+                }else if(type === 'delete'){
+
+                }
             })
             .catch((res) => {
-                console.log(res);
+                this.notiModal.setBody(res.response.data.message);
+                this.notiModal.open();
             });
     }
 
