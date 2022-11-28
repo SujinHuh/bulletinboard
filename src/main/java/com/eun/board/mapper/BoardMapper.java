@@ -19,6 +19,6 @@ public interface BoardMapper {
 
 
     // seq 일치하는
-
+    @Select("SELECT seq, title, content, private_yn, delete_yn FROM bbs where seq = #{seq} AND delete_yn = 'N' ")
     Bbs getView(String seq);
 }

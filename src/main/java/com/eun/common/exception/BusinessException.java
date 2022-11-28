@@ -18,8 +18,8 @@ public class BusinessException extends RuntimeException {
 
     public BusinessException(final ResponseCodes codes) {
         super(codes.getCode() + codes.getMessage());
+        this.errorCode = codes.getCode();
         this.message = codes.getMessage();
-        this.errorCode = codes.getMessage();
     }
 
 }

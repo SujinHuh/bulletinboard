@@ -2,6 +2,7 @@ package com.eun.board.action;
 
 import com.eun.board.service.BoardService;
 import com.eun.board.vo.Bbs;
+import com.eun.common.exception.BusinessException;
 import com.eun.common.security.services.UserDetail;
 import com.eun.constants.ResponseCodes;
 import com.eun.constants.ResponseVo;
@@ -94,20 +95,26 @@ public class BoardAction {
         Bbs bbs = boardService.getView(seq);
         // 1.게시글이 없을 경우 (validation 처리)
         if(bbs == null){
-            // 이렇게나 여기서
-            response.setCode("xxxx");
-            response.setMessage("게시글이존재하지않습니다.");
-            response.setData("error");
-            return response;
+            //게시글 없어 err
+            throw new BusinessException(ResponseCodes.BOARD_NULL);
         }
 
         // 2.게시글이 privetYN -> Y경우 (나와 관리자만 보여야함)
-
+        if("Y".equals(bbs.getPrivateYn())){
+               /* log.info("getPrivateYES",bbs.toString());
+                response.setMessage("게시글 Private Y");
+                response.setData("privateY");
+                return response;*/
+            throw new BusinessException(ResponseCodes.BOARD_PRIEVATE);
+        }
         // 3.게시글이 내가 작성한 게시글일 경우 (수정/삭제 버튼)
+
+
         log.info(member.toString());
 
 
         // 프로세스가 정상적으로 성공을하고 리턴이되면 이결 다시 정상으로 대입.
+        response.setData(bbs);
         response.setCode(ResponseCodes.SUCCESS.getCode());
         response.setMessage(ResponseCodes.SUCCESS.getMessage());
         return response;
