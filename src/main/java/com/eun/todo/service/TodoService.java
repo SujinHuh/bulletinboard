@@ -16,7 +16,15 @@ public class TodoService {
         return todoMapper.add(param);
     }
 
-    public List<Todo> list(String email) {
-        return todoMapper.list(email);
+    public List<Todo> list(int seq) {
+        return todoMapper.list(seq);
+    }
+
+    public int delete(int todoSeq, int memberSeq) {
+        return todoMapper.delete(todoSeq, memberSeq);
+    }
+
+    public int success(int todoSeq, int memberSeq) {
+        return todoMapper.success(todoSeq, memberSeq);
     }
 }

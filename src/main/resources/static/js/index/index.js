@@ -39,11 +39,14 @@ class Index {
     }
 
     renderDiv(data) {
+        console.log(data)
         let div = '' +
-            `<div class="d-flex align-items-center border-bottom py-2">`                                                                +
+            `<div class="d-flex align-items-center border-bottom py-2" id="todoDiv${data.seq}">`                                        +
                 `<div class="w-100 ms-3">`                                                                                              +
                     `<div class="d-flex w-100 align-items-center justify-content-between">`                                             +
-                        `<${data.successYn === 'Y' ? 'del' : 'span'}>${data.text}<${data.successYn === 'Y' ? '/del' : '/span'}>`        +
+                        `<${data.successYn === 'Y' ? 'del' : 'span'} id="todoText${data.seq}">`                                         +
+                            `${data.text}`                                                                                              +
+                        `<${data.successYn === 'Y' ? '/del' : '/span'}>`                                                                +
                         `<button class="todoBt btn btn-sm ${data.successYn === 'Y' ? 'text-primary' : ''}" data-seq="${data.seq}">`     +
                             `<i class="fa fa-times"></i></button>`                                                                      +
                     `</div>`                                                                                                            +

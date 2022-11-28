@@ -11,7 +11,7 @@ public class Todo {
 
     private int seq;            // seq
     private String text;        // 내용
-    private String email;       // 등록자 이메일 or user seq
+    private int memberSeq;      // ser seq
     private String successYn;   // 성공여부
     private String deleteYn;    // 삭제여부
     private String createDate;  // 생성일자
