@@ -15,8 +15,7 @@ public class BoardService {
     public int add(Bbs param) {
         return boardMapper.add(param);
     }
-    public List<Bbs> getList(){
-        return boardMapper.getList();
-    }
+    public List<Bbs> getList(){return boardMapper.getList();}
     public Bbs getView(String seq) { return boardMapper.getView(seq);}
+
 }

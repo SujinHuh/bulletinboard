@@ -18,10 +18,10 @@ public class Bbs {
     private String name;//이름
     private String email;       // 등록자 이메일 or user seq
     private int memberSeq; //member시퀀스
-    private int cnt;// 방문수
+    private int cnt;// 조회수
     private String privateYn;// 비밀여부
     private String deleteYn; //삭제여부
     private String createDate;  // 생성일자
     private String updateDate;  // 수정일자
-
+    private boolean isMyBbs; //게시글 소유여부
 }

@@ -100,7 +100,7 @@ public class BoardAction {
         }
 
         // 2.게시글이 privetYN -> Y경우 (나와 관리자만 보여야함)
-        if("Y".equals(bbs.getPrivateYn())){
+        if(member.getSeq() != bbs.getMemberSeq() && "Y".equals(bbs.getPrivateYn())){
                /* log.info("getPrivateYES",bbs.toString());
                 response.setMessage("게시글 Private Y");
                 response.setData("privateY");
@@ -108,10 +108,16 @@ public class BoardAction {
             throw new BusinessException(ResponseCodes.BOARD_PRIEVATE);
         }
         // 3.게시글이 내가 작성한 게시글일 경우 (수정/삭제 버튼)
-
+        if(member.getSeq() == bbs.getMemberSeq()){
+            bbs.setMyBbs(true);
+            //삭제|| 수정 버튼 , 삭제 -> 모달창(삭제||취소 여부) 삭제 -> 콜백 (삭제처리)
+            // 수정 -> 수정페이지로 이동 (content창 사용) , 글작성버튼 ,수정 완료
+        }
 
         log.info(member.toString());
+        log.info(bbs.toString());
 
+        // 4. 게시글을 클릭했으면 조회수를 올린다.
 
         // 프로세스가 정상적으로 성공을하고 리턴이되면 이결 다시 정상으로 대입.
         response.setData(bbs);
