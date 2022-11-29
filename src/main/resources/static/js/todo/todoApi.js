@@ -105,9 +105,9 @@ class TodoApi {
     }
 
     modify(type, target) {
-        console.log(type);
-        console.log(target);
-        axios.post(`/todo/modify/${type}/${target.dataset.seq}`)
+        // target은 버튼 객체로 따로 ID를 지정안해도 된다.
+        let seq = target.dataset.seq;
+        axios.post(`/todo/modify/${type}/${seq}`)
             .then((res) => {
                 if (res.data.code === '0000') {
                     this.notiModal.setBody('수정 완료.');
@@ -117,9 +117,10 @@ class TodoApi {
                 this.notiModal.open();
 
                 if(type === 'success'){
-                    document.getElementById('todo')
+                    target.classList.toggle(' text-primary');
+                    document.getElementById(`todoText${seq}`).classList.toggle('text-decoration-line-through');
                 }else if(type === 'delete'){
-
+                    document.getElementById(`todoDiv${seq}`).remove();
                 }
             })
             .catch((res) => {

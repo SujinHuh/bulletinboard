@@ -39,16 +39,16 @@ class Index {
     }
 
     renderDiv(data) {
-        console.log(data)
         let div = '' +
             `<div class="d-flex align-items-center border-bottom py-2" id="todoDiv${data.seq}">`                                        +
                 `<div class="w-100 ms-3">`                                                                                              +
                     `<div class="d-flex w-100 align-items-center justify-content-between">`                                             +
-                        `<${data.successYn === 'Y' ? 'del' : 'span'} id="todoText${data.seq}">`                                         +
+                        `<span id="todoText${data.seq}" class="${data.successYn === 'Y' ? 'text-decoration-line-through' : ''}">`       +
                             `${data.text}`                                                                                              +
-                        `<${data.successYn === 'Y' ? '/del' : '/span'}>`                                                                +
+                        `</span>`                                                                                                       +
                         `<button class="todoBt btn btn-sm ${data.successYn === 'Y' ? 'text-primary' : ''}" data-seq="${data.seq}">`     +
-                            `<i class="fa fa-times"></i></button>`                                                                      +
+                            `<i class="fa fa-times"></i>`                                                                               +
+                        `</button>`                                                                                                     +
                     `</div>`                                                                                                            +
                 `</div>`                                                                                                                +
             `</div>`;

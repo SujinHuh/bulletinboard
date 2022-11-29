@@ -59,7 +59,7 @@ public class TodoAction {
 
         // 2. service 전달
         int result = todoService.add(param);
-
+        log.info(param.toString());
         if(0 < result){
             response.setData(param);
         }
@@ -76,11 +76,6 @@ public class TodoAction {
 
         // 세션에서 유저정보 확인
         UserDetail user = (UserDetail) authentication.getPrincipal();
-
-        // 1.param 밸리데이션
-        log.info("param >>> {}", type);
-        log.info("param >>> {}", seq);
-        log.info("user >>> {}", user.getMember().toString());
 
         if("success".equals(type)){
             todoService.success(seq, user.getMember().getSeq());
