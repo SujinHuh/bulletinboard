@@ -109,7 +109,7 @@ class TodoApi {
         let seq = target.dataset.seq;
         axios.post(`/todo/modify/${type}/${seq}`)
             .then((res) => {
-                if (res.data.code === '0000') {
+                if (res.data.code === '료') {
                     this.notiModal.setBody('수정 완료.');
                 } else {
                     this.notiModal.setBody('수정 실패.');

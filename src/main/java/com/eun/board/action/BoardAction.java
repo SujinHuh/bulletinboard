@@ -110,6 +110,7 @@ public class BoardAction {
         // 3.게시글이 내가 작성한 게시글일 경우 (수정/삭제 버튼)
         if(member.getSeq() == bbs.getMemberSeq()){
             bbs.setMyBbs(true);
+            //삭제
             //삭제|| 수정 버튼 , 삭제 -> 모달창(삭제||취소 여부) 삭제 -> 콜백 (삭제처리)
             // 수정 -> 수정페이지로 이동 (content창 사용) , 글작성버튼 ,수정 완료
         }

@@ -15,6 +15,16 @@ class View {
             title : '게시판',
             body : '게시글 없음',
         }
+        let modifyModal = { // modifyModal
+            title: '수정',
+            body : '수정하시겠습니까?',
+            callback : [
+                {
+                    name : '수정',
+                    //callback :
+                }
+            ]
+        }
         this.notiModal = new Modal(contentNull);
         this.getView(seq);
     }
@@ -31,7 +41,7 @@ class View {
                 console.log(res.data.data); // responseVo에 set한 data
                 if(view.myBbs == true){
                     let btn = '<button>수정</button>';
-                    a.insertAdjacentHTML("beforeend", btn);
+                    a.addEventListener("click", (e) => this.modifyModal.open(e));
                 }
                     let div = '<tr>' +
                         `<td>${view.title}</td>` +
@@ -50,6 +60,27 @@ class View {
             });
 
     }
+
+    modify(type,target) {
+        let seq = target.dataset.seq;
+        axios.post('/board/view/${type}/${seq}')
+            .then((res) => {
+                if(res.data.code === '0000') {
+                    this.modifyModal.setBody('수정 완료');
+                } else {
+                    this.modifyModal.setBody('수정 실패');
+                }
+                this.modifyModal.open();
+
+                if(type === 'suscess'){
+                    target.classList.toggle('text-primary');
+                    document.getElementById('viewText${seq}').classList.toggle()
+                }
+            })
+        ;
+
+    }
+
 }
 
 (() => {
