@@ -73,7 +73,7 @@ class TodoApi {
             .then((res) => {
                 let list = res.data.data;
                 for (let i = 0; i < list.length; i++) {
-                    this.prop.el.id.todoList.insertAdjacentHTML('beforeend', this.prop.callback.rendering(list[i]));
+                    this.prop.el.id.todoList.insertAdjacentHTML('afterbegin', this.prop.callback.rendering(list[i]));
                 }
                 this.listEventBind();
             })
@@ -111,17 +111,18 @@ class TodoApi {
             .then((res) => {
                 if (res.data.code === '0000') {
                     this.notiModal.setBody('수정 완료.');
+
+                    if(type === 'success'){
+                        target.classList.toggle('text-primary')
+                        document.getElementById(`todoText${seq}`).classList.toggle('text-decoration-line-through');
+                    }else if(type === 'delete'){
+                        document.getElementById(`todoDiv${seq}`).remove();
+                    }
                 } else {
                     this.notiModal.setBody('수정 실패.');
                 }
-                this.notiModal.open();
 
-                if(type === 'success'){
-                    target.classList.toggle('text-primary');
-                    document.getElementById(`todoText${seq}`).classList.toggle('text-decoration-line-through');
-                }else if(type === 'delete'){
-                    document.getElementById(`todoDiv${seq}`).remove();
-                }
+                this.notiModal.open();
             })
             .catch((res) => {
                 this.notiModal.setBody(res.response.data.message);
