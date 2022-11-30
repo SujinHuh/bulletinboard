@@ -109,7 +109,7 @@ class TodoApi {
         let seq = target.dataset.seq;
         axios.post(`/todo/modify/${type}/${seq}`)
             .then((res) => {
-                if (res.data.code === '료') {
+                if (res.data.code === '0000') {
                     this.notiModal.setBody('수정 완료.');
                 } else {
                     this.notiModal.setBody('수정 실패.');
@@ -117,7 +117,7 @@ class TodoApi {
                 this.notiModal.open();
 
                 if(type === 'success'){
-                    target.classList.toggle(' text-primary');
+                    target.classList.toggle('text-primary');
                     document.getElementById(`todoText${seq}`).classList.toggle('text-decoration-line-through');
                 }else if(type === 'delete'){
                     document.getElementById(`todoDiv${seq}`).remove();

@@ -29,6 +29,28 @@ class View {
         this.getView(seq);
     }
 
+    setModal(){
+        let contentNull = { //modal
+            title : '게시판',
+            body : '게시글 없음',
+        }
+        let modifyModal = { // modifyModal
+            title: '수정',
+            body : '수정하시겠습니까?',
+            callback : [
+                {
+                    name : '수정',
+                    callback : (target) => this.modify('modify', target)
+                },{
+                    name: '삭제',
+                    callback : (target) => this.modify('delete',target)
+                }
+            ]
+        }
+        this.notiModal = new Modal(contentNull);
+        this.notiModal = new Modal(modifyModal);
+    }
+
     getView(seq) {
         let a = document.getElementById('contentArea'); //해당 tag에 접근
         //  BoardAction-view() 2. axios를 통해  method post로 아래 URL로 게시글번호를 전달한 상황입니다.
@@ -49,8 +71,6 @@ class View {
                         '</tr>';
                     a.insertAdjacentHTML("beforeend", div); //js로 dom 요소를 삽입
             })
-
-            //http status -> 500
             .catch((res) => {
                 console.log(res);
                 //exception 발생후 메세지는 서버에서 발생
@@ -74,9 +94,14 @@ class View {
 
                 if(type === 'suscess'){
                     target.classList.toggle('text-primary');
-                    document.getElementById('viewText${seq}').classList.toggle()
+                    document.getElementById('viewText${seq}').classList.toggle('');//클래스의 유무체크
+                } else if (type === 'delete') {
+                    document.getElementById('viewDiv${seq}').remove();
                 }
             })
+            .catch((res) =>{
+                this.notiModal.open();
+            });
         ;
 
     }
