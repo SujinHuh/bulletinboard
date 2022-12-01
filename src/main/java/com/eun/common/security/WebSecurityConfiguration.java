@@ -32,7 +32,7 @@ public class WebSecurityConfiguration {
 			.csrf().disable()
 			.httpBasic().disable()
 			.requestCache(RequestCacheConfigurer::disable)
-			.exceptionHandling().accessDeniedPage("/404.html")
+			.exceptionHandling().accessDeniedPage("/error")
 		;
 
 //		http
