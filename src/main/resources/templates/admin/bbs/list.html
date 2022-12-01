@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<th:block layout:fragment="content">
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-secondary text-center rounded p-4">
+
+            <div class="form-floating mb-2">
+                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                    <option selected="">전체</option>
+                </select>
+                <label for="floatingSelect">게시판 타입</label>
+            </div>
+
+            <div class="d-flex mb-2">
+                <input class="form-control bg-dark border-0" type="text" placeholder="Search">
+                <button type="button" class="btn btn-primary ms-2">search</button>
+            </div>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>John</td>
+                    <td>Doe</td>
+                    <td>jhon@email.com</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+</th:block>
+
+<th:block layout:fragment="customScript">
+
+    <!-- Template Javascript -->
+    <script type="module" src="/js/admin/bbs/list.js"></script>
+
+</th:block>
+</html>
