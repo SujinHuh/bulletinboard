@@ -5,7 +5,13 @@ import Modal from '/js/common/modal.js';
 
 class View {
 
-    constructor() {
+    constructor(prop) {
+        this.prop = prop;
+        this.dom = {
+            modifyBt : document.getElementById('modifyBt')
+        };
+        this.init();
+
         console.log(location.pathname); // 현재 페이지의 경로를 반환
         let array = location.pathname.split('/');
 
@@ -15,20 +21,17 @@ class View {
             title : '게시판',
             body : '게시글 없음',
         }
-        let modifyModal = { // modifyModal
-            title: '수정',
-            body : '수정하시겠습니까?',
-            callback : [
-                {
-                    name : '수정',
-                    //callback :
-                }
-            ]
-        }
         this.notiModal = new Modal(contentNull);
         this.getView(seq);
+        // this.setModal(); //클릭을 하면 수정,삭제 버튼이 나와야 하니까.
     }
-
+    init(){
+        this.eventBind();
+    }
+    eventBind() {
+        console.log('수정버튼 클릭');
+        this.prop.el.id.modifyBt.addEventListener('click',() => this.setModal());
+    }
     setModal(){
         let contentNull = { //modal
             title : '게시판',
@@ -49,6 +52,12 @@ class View {
         }
         this.notiModal = new Modal(contentNull);
         this.notiModal = new Modal(modifyModal);
+
+        let notiParam = {
+            title : 'content View',
+            body : '선택해주세요',
+        }
+        this.notiModal = new Modal(notiParam);
     }
 
     getView(seq) {
@@ -83,7 +92,7 @@ class View {
 
     modify(type,target) {
         let seq = target.dataset.seq;
-        axios.post('/board/view/${type}/${seq}')
+        axios.post(`/todo/modify/${type}/${seq}`)
             .then((res) => {
                 if(res.data.code === '0000') {
                     this.modifyModal.setBody('수정 완료');
@@ -94,7 +103,7 @@ class View {
 
                 if(type === 'suscess'){
                     target.classList.toggle('text-primary');
-                    document.getElementById('viewText${seq}').classList.toggle('');//클래스의 유무체크
+                    document.getElementById('viewText${seq}').classList.toggle('text-decoration-line-through');//클래스의 유무체크
                 } else if (type === 'delete') {
                     document.getElementById('viewDiv${seq}').remove();
                 }
