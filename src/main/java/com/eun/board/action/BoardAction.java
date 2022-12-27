@@ -111,12 +111,12 @@ public class BoardAction {
         // 3.게시글이 내가 작성한 게시글일 경우 (수정/삭제 버튼) -> deleteY
         if(member.getSeq() == bbs.getMemberSeq()){
             bbs.setMyBbs(true);
-            if("N".equals(bbs.getDeleteYn())){
-                throw new BusinessException(ResponseCodes.BOARD_MODIFY);
-            }
-            if("Y".equals(bbs.getDeleteYn())){
-                throw new BusinessException(ResponseCodes.BOARD_DELETE);
-            }
+//            if("N".equals(bbs.getDeleteYn())){
+//                throw new BusinessException(ResponseCodes.BOARD_MODIFY);
+//            }
+//            if("Y".equals(bbs.getDeleteYn())){
+//                throw new BusinessException(ResponseCodes.BOARD_DELETE);
+//            }
 
         }
 

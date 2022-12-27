@@ -5,10 +5,8 @@ import Modal from '/js/common/modal.js';
 
 class View {
 
-    async constructor() {
-        this.dom = {
-            modifyBt: document.getElementById('modifyBt')
-        };
+    constructor() {
+
         console.log(location.pathname); // 현재 페이지의 경로를 반환
         let array = location.pathname.split('/');
 
@@ -17,29 +15,23 @@ class View {
         // 1.  modal을 쓰기에 가장먼저 로딩이되야된다.
         this.setModal();
         // 2. 게시글을 가져와야 이벤트를 바인딩할수있다.
-        await this.getView(seq);
+        this.getView(seq);
         // 3. 이벤트를 바인딩 할 태그 + 모달을 띄어야되니까 가장마지막에 이벤트를 바인딩한다.
-        if (this.myBbs) {
-            this.eventBind();
-        }
-    }
-    eventBind() {   // 버튼에 이벤트는 모달을 셋팅하는게 아닌 선언된 모달의 함수를 이용해야된다.
-                    // 지금같은 경우는 open함수를 사용.
-        this.dom.modifyBt.addEventListener('click', () => this.modifyModal.open());
 
     }
 
     setModal(){  // 한번만 콜되야되는 함수
+        console.log("setModal");
         let modifyModal = {
             title: '수정',
             body : '수정하시겠습니까?',
             callback : [
                 {
                     name : '수정',
-                    callback : (target) => this.modify('modify', target)
+                    callback : (target) => { alert("이 버튼은 수정페이지로 이동해야됩니다.")}
                 },{
                     name: '삭제',
-                    callback : (target) => this.modify('delete',target)
+                    callback : (target) => {alert("이 버튼은 비동기로 딜리트와이앤을 와이로 바꿔야됩니다.") }
                 }
             ]
         }
@@ -48,13 +40,13 @@ class View {
 
         let notiParam = {
             title : '게시판',
-            body : '선택해주세요',
+            body : '',
         }
         this.notiModal = new Modal(notiParam);
     }
 
     //비동기 -> 동기
-    async getView(seq) {  // 마찬가지로 게시글을 가져오는 함수이기에 한번만 콜되야된다.
+    getView(seq) {  // 마찬가지로 게시글을 가져오는 함수이기에 한번만 콜되야된다.
         let a = document.getElementById('contentArea'); //해당 tag에 접근
         //  BoardAction-view() 2. axios를 통해  method post로 아래 URL로 게시글번호를 전달한 상황입니다.
         axios.post('/board/view/' + seq)
@@ -68,8 +60,18 @@ class View {
                 let div = '<tr>' +
                     `<td>${view.title}</td>` +
                     `<td>${view.content}</td>` +
-                    '</tr>';
+                    '</tr>'
+
+                ;
+                if(this.myBbs){
+                    div += '<button type="button" class="btn btn-primary ms-2" id="modifyBt" name="modifyBt">Modify</button>';
+                }
                 a.insertAdjacentHTML("beforeend", div); //js로 dom 요소를 삽입
+                this.dom = {
+                    modifyBt: document.getElementById('modifyBt')
+                };
+                this.dom.modifyBt.addEventListener('click', () => this.modifyModal.open());
+
             })
             .catch((res) => {
                 console.log(res);
@@ -82,6 +84,7 @@ class View {
     }
 
     modify(type,target) {   // 수정/삭제는 한번만 일어나겠죠? 그러니까 이것도 한번만 콜되야되는 함수.
+        console.log("modify");
         let seq = target.dataset.seq;
         axios.post(`/board/modify/${seq}`)
             .then((res) => {
@@ -90,7 +93,7 @@ class View {
                 } else {
                     this.modifyModal.setBody('수정 실패');
                 }
-                this.modifyModal.open();
+                // this.modifyModal.open();
 
                 if(type === 'suscess'){
                     target.classList.toggle('text-primary');
