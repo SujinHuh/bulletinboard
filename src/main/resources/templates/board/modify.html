@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<th:block layout:fragment="content">
+
+    <div class="bg-secondary rounded h-100 p-4">
+        <h6 class="mb-4" id="title">Content Modify </h6>
+        <button type="button" class="btn btn-primary ms-2" id="editCompleteBt" name="editCompleteBt">editComplete</button>
+        <div class="content pt-3" >
+            <div id="contentArea" class="tab-pane fade show active"  role="tabpanel" aria-labelledby="nav-home-tab">
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+<th:block layout:fragment="customScript">
+
+    <!-- Template Javascript -->
+    <script type="module" src="/js/board/view.js"></script>
+
+</th:block>
+</html>
