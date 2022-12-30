@@ -28,7 +28,10 @@ class View {
             callback : [
                 {
                     name : '수정',
-                    callback : (target) => { alert("이 버튼은 수정페이지로 이동해야됩니다.")}
+                    callback : (target) => {
+                        alert("이 버튼은 수정페이지로 이동해야됩니다.")
+
+                    }
                 },{
                     name: '삭제',
                     callback : (target) => {alert("이 버튼은 비동기로 딜리트와이앤을 와이로 바꿔야됩니다.") }

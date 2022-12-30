@@ -123,7 +123,8 @@ public class BoardAction {
         log.info(member.toString());
         log.info(bbs.toString());
 
-        // 4. 게시글을 클릭했으면 조회수를 올린다.
+        // 4. 게시글을 클릭했으면 조회수를 올린다.s
+//        boardService.bbsCounting(bbs.getSeq());
 
         // 프로세스가 정상적으로 성공을하고 리턴이되면 이결 다시 정상으로 대입.
         response.setData(bbs);
@@ -132,7 +133,21 @@ public class BoardAction {
         return response;
     }
 
+    /**게시판 글 Modify */
+    @GetMapping(value = "/board/modify/{seq}")
+    public String modify() {return "/board/modify";}
+
+    @PostMapping(value = "/board/modify/{seq}")
+    @ResponseBody public ResponseVo modify(@PathVariable String seq,Authentication authentication) {
+
+        ResponseVo response = new ResponseVo();
+
+
+
+        return response;
+    }
 }
+
 
 
 
