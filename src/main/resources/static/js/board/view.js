@@ -28,13 +28,11 @@ class View {
             callback : [
                 {
                     name : '수정',
-                    callback : (target) => {
-                        alert("이 버튼은 수정페이지로 이동해야됩니다.")
-
-                    }
+                    // callback : (target) => {alert("이 버튼은 수정페이지로 이동해야됩니다.")}
+                    callback : (target) => this.modify('success',target)
                 },{
                     name: '삭제',
-                    callback : (target) => {alert("이 버튼은 비동기로 딜리트와이앤을 와이로 바꿔야됩니다.") }
+                    callback : (target) => this.modify('delete', target)
                 }
             ]
         }
@@ -87,9 +85,9 @@ class View {
     }
 
     modify(type,target) {   // 수정/삭제는 한번만 일어나겠죠? 그러니까 이것도 한번만 콜되야되는 함수.
-        console.log("modify");
+        console.log("modify 진입");
         let seq = target.dataset.seq;
-        axios.post(`/board/modify/${seq}`)
+        axios.post(`/board/modify/${type}/${seq}`)
             .then((res) => {
                 if(res.data.code === '0111') {
                     this.modifyModal.setBody('수정 완료');
@@ -98,7 +96,7 @@ class View {
                 }
                 // this.modifyModal.open();
 
-                if(type === 'suscess'){
+                if(type === 'success'){
                     target.classList.toggle('text-primary');
                     document.getElementById('viewText${seq}').classList.toggle('text-decoration-line-through');//클래스의 유무체크
                 } else if (type === 'delete') {

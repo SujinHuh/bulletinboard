@@ -28,3 +28,9 @@ DELETE FROM bbs;
 Select seq, title, name, cnt, create_date FROM bbs Where bbs_cd = 'FR' AND delete_yn = 'N' order by seq DESC;
 
 SELECT seq, title, content FROM bbs where seq = 4 AND delete_yn = 'N' AND private_yn = 'N';
+
+# UPDATE bbs SET 변경할 값 where 열
+update bbs set title = '제목수정1' ,content ='내용수정을 했지욤1', update_date = now() where seq = 9;
+
+# delete
+update bbs set delete_yn = 'Y',update_date = now() where seq = 8 AND member_seq = 1;

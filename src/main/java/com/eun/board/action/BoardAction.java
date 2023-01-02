@@ -8,6 +8,7 @@ import com.eun.constants.ResponseCodes;
 import com.eun.constants.ResponseVo;
 import com.eun.member.vo.Member;
 import lombok.extern.slf4j.Slf4j;
+import org.graalvm.compiler.lir.LIRInstruction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.security.core.Authentication;
@@ -134,16 +135,28 @@ public class BoardAction {
     }
 
     /**게시판 글 Modify */
-    @GetMapping(value = "/board/modify/{seq}")
+    @GetMapping(value = "/board/modify/{type}/{seq}")
     public String modify() {return "/board/modify";}
 
-    @PostMapping(value = "/board/modify/{seq}")
-    @ResponseBody public ResponseVo modify(@PathVariable String seq,Authentication authentication) {
+    @PostMapping(value = "/board/modify/{type}/{seq}")
+    @ResponseBody public ResponseVo modify(@PathVariable String type,@PathVariable Integer seq,Authentication authentication) {
 
         ResponseVo response = new ResponseVo();
 
+        //세션 유저정보 확인
+        UserDetail user = (UserDetail) authentication.getPrincipal();
 
+        if("success".equals(type)){
+            boardService.success(seq,user.getMember().getSeq());
+        }else if("delete".equals(type)){
+            boardService.delete(seq,user.getMember().getSeq());
+        }else {
+            log.info("type 존재하지 않습니다.");
+            throw new BusinessException(ResponseCodes.REQUIRED_PARAMETERS);
+        }
 
+        response.setCode(ResponseCodes.SUCCESS.getCode());
+        response.setMessage(ResponseCodes.SUCCESS.getMessage());
         return response;
     }
 }

@@ -107,6 +107,7 @@ class TodoApi {
     modify(type, target) {
         // target은 버튼 객체로 따로 ID를 지정안해도 된다.
         let seq = target.dataset.seq;
+        console.log("todo modify 진입");
         axios.post(`/todo/modify/${type}/${seq}`)
             .then((res) => {
                 if (res.data.code === '0000') {

@@ -4,6 +4,7 @@ import com.eun.board.vo.Bbs;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -23,4 +24,10 @@ public interface BoardMapper {
     Bbs getView(String seq);
 
 
+    @Update("UPDATE bbs set title = #{title}, content = #{content}, update_date = now() " +
+            "where seq = #{bbsSeq} AND member_seq =#{memberSeq}" )
+    void success(int boardSeq, int memberSeq);
+
+    @Update("UPDATE bbs set delete_yn = 'Y', update_data = now() where seq = #{bbsSeq} AND member_seq = #{memberSeq}")
+    void delete(int boardSeq, int memberSeq);//비동기 delete_yn -> y Update
 }
