@@ -2,16 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <th:block layout:fragment="content">
-
+    <!--게시판 컨텐츠-->
     <div class="bg-secondary rounded h-100 p-4">
-        <h6 class="mb-4" id="title">Content Modify </h6>
-        <button type="button" class="btn btn-primary ms-2" id="editCompleteBt" name="editCompleteBt">editComplete</button>
-        <div class="content pt-3" >
-            <div id="contentArea" class="tab-pane fade show active"  role="tabpanel" aria-labelledby="nav-home-tab">
+        <h6 class="mb-4">Floating Label</h6>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="title" placeholder="title">
+            <label for="title">제목</label>
+        </div>
+        <legend class="col-form-label col-sm-2 pt-0">비밀글여부</legend>
+        <div class="col-sm-10">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="privateN" name="private" value="N" checked="">
+                <label class="form-check-label" for="privateN">
+                    No
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="privateY" name="private" value="Y">
+                <label class="form-check-label" for="privateY">
+                    Yes
+                </label>
             </div>
         </div>
-    </div>
 
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="content" style="height: 220px;"></textarea>
+            <label for="content">본문</label>
+        </div>
+        <button type="button" id="contentModifyBt" class="btn btn-info m-2">수정</button>
+    </div>
 </th:block>
 
 <th:block layout:fragment="customScript">

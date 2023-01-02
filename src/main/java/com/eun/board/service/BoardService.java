@@ -18,7 +18,6 @@ public class BoardService {
     public List<Bbs> getList(){return boardMapper.getList();}
     public Bbs getView(String seq) { return boardMapper.getView(seq);}
 
-    public void success(int boardSeq, int memberSeq) {boardMapper.success(boardSeq, memberSeq);}
-
-    public void delete(int boardSeq, int memberSeq) { boardMapper.delete(boardSeq, memberSeq);}
+    public int modify(Bbs param) { return boardMapper.modify(param);
+    }
 }

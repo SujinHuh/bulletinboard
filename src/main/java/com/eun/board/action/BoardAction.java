@@ -8,14 +8,10 @@ import com.eun.constants.ResponseCodes;
 import com.eun.constants.ResponseVo;
 import com.eun.member.vo.Member;
 import lombok.extern.slf4j.Slf4j;
-import org.graalvm.compiler.lir.LIRInstruction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -50,7 +46,7 @@ public class BoardAction {
 
     /**게시판 insert */
     @PostMapping(value = "/freeboard/add")
-    @ResponseBody public ResponseVo add(@Valid @RequestBody Bbs param, Authentication authentication){
+    @ResponseBody public ResponseVo add(@RequestBody Bbs param, Authentication authentication){
         ResponseVo response = new ResponseVo();
         //스프링시큐리티 자체가 authentication 이객체에 세션을 만듬
         UserDetail user = (UserDetail) authentication.getPrincipal();
@@ -135,25 +131,37 @@ public class BoardAction {
     }
 
     /**게시판 글 Modify */
-    @GetMapping(value = "/board/modify/{type}/{seq}")
+    @GetMapping(value = "/board/modify/{seq}")
     public String modify() {return "/board/modify";}
 
-    @PostMapping(value = "/board/modify/{type}/{seq}")
-    @ResponseBody public ResponseVo modify(@PathVariable String type,@PathVariable Integer seq,Authentication authentication) {
+    @PostMapping(value = "/board/modify")
+    @ResponseBody public ResponseVo modify(@RequestBody Bbs param, Authentication authentication) {
+
+        log.info("param >>> " + param.toString());
 
         ResponseVo response = new ResponseVo();
 
         //세션 유저정보 확인
         UserDetail user = (UserDetail) authentication.getPrincipal();
 
-        if("success".equals(type)){
-            boardService.success(seq,user.getMember().getSeq());
-        }else if("delete".equals(type)){
-            boardService.delete(seq,user.getMember().getSeq());
-        }else {
-            log.info("type 존재하지 않습니다.");
-            throw new BusinessException(ResponseCodes.REQUIRED_PARAMETERS);
+        // 지금 현재 문제점은 게시글 번호만 받고있기에
+        // 수정될 내용을 안받고있다.
+        // 게시글 수정은 등록과 동일하다.
+        // 그렇다면 우선 수정될 내용을 받아야한다.
+
+        param.setMemberSeq(user.getMember().getSeq());
+
+        // bbs seq가 위변조되었는지 한번더 권한을 확인을해
+        Bbs bbs2 = boardService.getView(String.valueOf(param.getSeq()));
+
+        if (bbs2.getMemberSeq() != user.getMember().getSeq() ) {
+            // throw new BusinessException();
         }
+
+        // 그러고나서 업데이트
+        boardService.modify(param);
+
+        // 게시글 modify && view same
 
         response.setCode(ResponseCodes.SUCCESS.getCode());
         response.setMessage(ResponseCodes.SUCCESS.getMessage());

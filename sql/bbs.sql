@@ -34,3 +34,4 @@ update bbs set title = '제목수정1' ,content ='내용수정을 했지욤1', u
 
 # delete
 update bbs set delete_yn = 'Y',update_date = now() where seq = 8 AND member_seq = 1;
+delete from bbs where seq = 1 AND member_seq = 1;
