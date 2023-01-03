@@ -72,12 +72,12 @@ class View {
         axios.post(`/board/delete/${seq}`)//url 맵핑
         // axios.post(`/board/delete/`, {seq : seq}) //requestParam 맵핑 /{json객체로 던지는}
             .then((res) => {
-                console.log(res);
-                // let view = res.data.data;
-                // console.log(res)
-                // console.log(res.data);
-                // console.log(res.data.data);
+                let view = res.data.data;
+                console.log(res)
+                console.log(res.data);
+                console.log(res.data.data);
 
+                //res.data.data.deleteN = false;
             })
     }
 

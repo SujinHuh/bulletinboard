@@ -180,13 +180,17 @@ public class BoardAction {
         log.info("user.getMember.getSeq >>>>"+ user.getMember().getSeq());
         Member member = user.getMember();
         Bbs bbs = boardService.getView(String.valueOf(seq));
-
+        log.info("bbs.getMemberSeq >>>" + bbs.getMemberSeq());
         // update 할때 조건문에 member.seq넣어서 본인확인도해주는게좋을듯싶다!
-        if(user.getMember().getSeq() != bbs.getMemberSeq()) { //게시판의 seq
+        if(user.getMember().getSeq() == bbs.getMemberSeq()) { //게시판의 seq
+                //boardService.modify(bbs);
+                boardService.delete(seq);
+                log.info(bbs.getDeleteYn());
+                log.info(bbs.getUpdateDate());
+
+        } else {
             throw new BusinessException(ResponseCodes.BOARD_ERR);
         }
-
-//        boardService.delete(seq);
 
         response.setCode(ResponseCodes.SUCCESS.getCode());
         response.setMessage(ResponseCodes.SUCCESS.getMessage());

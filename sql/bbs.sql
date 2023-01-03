@@ -33,5 +33,6 @@ SELECT seq, title, content FROM bbs where seq = 4 AND delete_yn = 'N' AND privat
 update bbs set title = '제목수정1' ,content ='내용수정을 했지욤1', update_date = now() where seq = 9;
 
 # delete
-update bbs set delete_yn = 'Y',update_date = now() where seq = 8 AND member_seq = 1;
+update bbs set delete_yn = 'Y',update_date = now() where seq = 4 AND member_seq = 1;
+
 delete from bbs where seq = 1 AND member_seq = 1;

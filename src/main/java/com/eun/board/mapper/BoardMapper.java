@@ -28,6 +28,6 @@ public interface BoardMapper {
             "where seq = #{seq} AND member_seq =#{memberSeq}" )
     int modify(Bbs param);
 
-    @Update("UPDATE bbs set delete_yn = 'Y', update_date = now() where seq = #{seq} AND member_seq = #{memberSeq}")
+    @Update("UPDATE bbs SET delete_yn = 'Y', update_date = now() WHERE seq = #{seq} AND member_seq = #{memberSeq}")
     int delete(int seq);
 }
