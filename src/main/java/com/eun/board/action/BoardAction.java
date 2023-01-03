@@ -155,7 +155,7 @@ public class BoardAction {
         Bbs bbs2 = boardService.getView(String.valueOf(param.getSeq()));
 
         if (bbs2.getMemberSeq() != user.getMember().getSeq() ) {
-            // throw new BusinessException();
+             throw new BusinessException(ResponseCodes.BOARD_ERR);
         }
 
         // 그러고나서 업데이트
@@ -166,6 +166,32 @@ public class BoardAction {
         response.setCode(ResponseCodes.SUCCESS.getCode());
         response.setMessage(ResponseCodes.SUCCESS.getMessage());
         return response;
+    }
+
+    @PostMapping(value = "/board/delete/{seq}")
+    @ResponseBody public ResponseVo delete(@PathVariable int seq, Authentication authentication) {
+
+        log.info("seq >>> " + seq );
+
+        ResponseVo response = new ResponseVo();
+        //세션 유저정보 확인
+        UserDetail user = (UserDetail) authentication.getPrincipal();
+        // User Seq
+        log.info("user.getMember.getSeq >>>>"+ user.getMember().getSeq());
+        Member member = user.getMember();
+        Bbs bbs = boardService.getView(String.valueOf(seq));
+
+        // update 할때 조건문에 member.seq넣어서 본인확인도해주는게좋을듯싶다!
+        if(user.getMember().getSeq() != bbs.getMemberSeq()) { //게시판의 seq
+            throw new BusinessException(ResponseCodes.BOARD_ERR);
+        }
+
+//        boardService.delete(seq);
+
+        response.setCode(ResponseCodes.SUCCESS.getCode());
+        response.setMessage(ResponseCodes.SUCCESS.getMessage());
+        return response;
+
     }
 }
 

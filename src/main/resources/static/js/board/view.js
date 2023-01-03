@@ -14,8 +14,10 @@ class View {
 
         // 1.  modal을 쓰기에 가장먼저 로딩이되야된다.
         this.setModal(seq);
+        this.deleteModal(seq);
         // 2. 게시글을 가져와야 이벤트를 바인딩할수있다.
         this.getView(seq);
+        // this.setDeleteContent(seq); //-> 여기서 실행을 시키지 않으면
         // 3. 이벤트를 바인딩 할 태그 + 모달을 띄어야되니까 가장마지막에 이벤트를 바인딩한다.
 
     }
@@ -32,7 +34,8 @@ class View {
                     callback : () => location.href = `/board/modify/${seq}`
                 },{
                     name: '삭제',
-                    callback : () => alert("삭제 모달창으로 이동") //this.deleteModal.opne()
+                    callback : () => this.deleteCheckModal.open()
+                    // callback : () => alert("삭제 모달창으로 이동") //this.deleteModal.opne()
                 }
             ]
         }
@@ -45,6 +48,40 @@ class View {
         }
         this.notiModal = new Modal(notiParam);
     }
+
+    //삭제 확인하는 modal창
+    deleteModal(seq) {
+        console.log("deleteModal 진입");
+        let deleteCheckModal = {
+            title : '삭제',
+            body : '정말 삭제하시겠습니까?',
+            callback : [
+                {
+                    name : '삭제',
+                    callback : () => this.setDeleteContent(seq)
+                    // callback : () => location.href = `/board/delete`
+                }
+            ]
+        }
+        this.deleteCheckModal = new Modal(deleteCheckModal);
+    }
+
+    setDeleteContent(seq){ //질문
+        console.log("contentDelete 진입")
+        //비동기통신 /http통신 deleteYn을 n으로 수정
+        axios.post(`/board/delete/${seq}`)//url 맵핑
+        // axios.post(`/board/delete/`, {seq : seq}) //requestParam 맵핑 /{json객체로 던지는}
+            .then((res) => {
+                console.log(res);
+                // let view = res.data.data;
+                // console.log(res)
+                // console.log(res.data);
+                // console.log(res.data.data);
+
+            })
+    }
+
+
 
     //비동기 -> 동기
     getView(seq) {  // 마찬가지로 게시글을 가져오는 함수이기에 한번만 콜되야된다.

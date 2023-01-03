@@ -27,4 +27,7 @@ public interface BoardMapper {
     @Update("UPDATE bbs set title = #{title}, content = #{content}, update_date = now() " +
             "where seq = #{seq} AND member_seq =#{memberSeq}" )
     int modify(Bbs param);
+
+    @Update("UPDATE bbs set delete_yn = 'Y', update_date = now() where seq = #{seq} AND member_seq = #{memberSeq}")
+    int delete(int seq);
 }

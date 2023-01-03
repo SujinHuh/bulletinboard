@@ -8,7 +8,9 @@ public enum ResponseCodes {
     BOARD_PRIEVATE("0101","게시글이 비밀글입니다."),
 
     BOARD_DELETE("0011","게시글을 삭제하겠습니다." ),
-    BOARD_MODIFY("0111","게시글을 수정하겠습니다." );
+    BOARD_MODIFY("0111","게시글을 수정하겠습니다." ),
+
+    BOARD_ERR("0110","게시글 memberseq가 일치하지 않습니다.");
     private final String code;
     private final String message;
 
