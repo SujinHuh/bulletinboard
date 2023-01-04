@@ -36,12 +36,15 @@ class Content{
             param.privateYn = this.dom.privateY.value;
         }
 
-        axios.post('/freeboard/add', param)
+        axios.post('/board/add', param)
             .then((res) => {
                 console.log(res);
+                console.log(res.data);
+                console.log(res.data.data);
                 if (res.data.code === '0000') {
                     alert('추가 완료.');
-                    location.href = '/freeboard/content/res.data.seq'
+                    location.href = `/board/view/${res.data.data.seq}`
+                    // location.href = '/board/content/res.data.seq'
                 } else {
                     alert('추가 실패.');
                 }

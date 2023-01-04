@@ -5,8 +5,11 @@ import axios from '/js/common/axios.js';
 class List {
 
     constructor(type) {
+        this.dom  = {
+            contentWriteBt : document.getElementById('contentWriteBt')
+        };
         this.type = type;
-        this.dom = {};
+        // this.dom = {};
 
         this.init();
         this.eventBind();
@@ -19,11 +22,12 @@ class List {
 
     eventBind() {
         console.log('eventBind!!');
+        this.dom.contentWriteBt.addEventListener('click', () => location.href = '/board/add');
     }
 
     getList() {
         let a = document.getElementById('listArea');
-        axios.post('/freeboard/list')
+        axios.post('/board/list')
             .then((res) => {
                 let list = res.data.data;
 

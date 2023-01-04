@@ -76,6 +76,10 @@ class View {
                 console.log(res)
                 console.log(res.data);
                 console.log(res.data.data);
+                // 여기서 작업이 발생해야지
+                // 삭제가처리되었다는 정보 or 페이지이동
+
+                location.href = `/board/list`;
 
                 //res.data.data.deleteN = false;
             })

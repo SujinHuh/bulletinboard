@@ -22,12 +22,12 @@ public class BoardAction {
     BoardService boardService;
 
     /** 게시판 글 list */
-    @GetMapping(value="/freeboard/list")
+    @GetMapping(value="/board/list")
     public String list(){
         return "/board/list";
     }
 
-    @PostMapping(value="/freeboard/list")
+    @PostMapping(value="/board/list")
     @ResponseBody public ResponseVo list(String temp){
         ResponseVo response = new ResponseVo();
 
@@ -39,13 +39,13 @@ public class BoardAction {
         return response;
     }
 
-    @GetMapping(value="/freeboard/add")
+    @GetMapping(value="/board/add")
     public String add(){
         return "/board/add";
     }
 
     /**게시판 insert */
-    @PostMapping(value = "/freeboard/add")
+    @PostMapping(value = "/board/add")
     @ResponseBody public ResponseVo add(@RequestBody Bbs param, Authentication authentication){
         ResponseVo response = new ResponseVo();
         //스프링시큐리티 자체가 authentication 이객체에 세션을 만듬
@@ -66,7 +66,9 @@ public class BoardAction {
 
         if(0 < result){
             response.setData(param);
+
         }
+
         // 프로세스가 정상적으로 성공을하고 리턴이되면 이결 다시 정상으로 대입시키죠.
         response.setCode(ResponseCodes.SUCCESS.getCode());
         response.setMessage(ResponseCodes.SUCCESS.getMessage());
@@ -179,19 +181,25 @@ public class BoardAction {
         // User Seq
         log.info("user.getMember.getSeq >>>>"+ user.getMember().getSeq());
         Member member = user.getMember();
+        // 여기서 select 하면 deleteYn = N이지?
         Bbs bbs = boardService.getView(String.valueOf(seq));
         log.info("bbs.getMemberSeq >>>" + bbs.getMemberSeq());
         // update 할때 조건문에 member.seq넣어서 본인확인도해주는게좋을듯싶다!
         if(user.getMember().getSeq() == bbs.getMemberSeq()) { //게시판의 seq
                 //boardService.modify(bbs);
-                boardService.delete(seq);
+                int result = boardService.delete(seq);
+                // update가 되면 result는 업데이트의 행만큼의 숫자가 리턴이됨.
+                if(0 < result ){
+                    bbs.setDeleteYn("Y");
+                }
                 log.info(bbs.getDeleteYn());
                 log.info(bbs.getUpdateDate());
 
         } else {
             throw new BusinessException(ResponseCodes.BOARD_ERR);
         }
-
+        // 리턴을 그대로하니까 N으로넘어가죠
+        response.setData(bbs);
         response.setCode(ResponseCodes.SUCCESS.getCode());
         response.setMessage(ResponseCodes.SUCCESS.getMessage());
         return response;
