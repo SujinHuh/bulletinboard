@@ -15,7 +15,7 @@ public class TodoService {
     public int add(Todo param) {
         return todoMapper.add(param);
     }
-
+    
     public List<Todo> list(int seq) {
         return todoMapper.list(seq);
     }
