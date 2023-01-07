@@ -11,5 +11,5 @@ import java.util.List;
 public class CommentService {
     @Autowired
     CommentMapper commentMapper;
-    public List<Comment> list(int seq) {return commentMapper.list(seq);}
+    public List<Comment> list(String seq) {return commentMapper.list(seq);}
 }

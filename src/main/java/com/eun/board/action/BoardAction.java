@@ -3,6 +3,7 @@ package com.eun.board.action;
 import com.eun.board.service.BoardService;
 import com.eun.board.vo.Bbs;
 import com.eun.comment.action.CommentAction;
+import com.eun.comment.service.CommentService;
 import com.eun.comment.vo.Comment;
 import com.eun.common.exception.BusinessException;
 import com.eun.common.security.services.UserDetail;
@@ -22,7 +23,7 @@ public class BoardAction {
 
     @Autowired
     BoardService boardService;
-    CommentAction commentAction;
+    CommentService commentService;
 
     /** 게시판 글 list */
     @GetMapping(value="/board/list")
@@ -96,9 +97,6 @@ public class BoardAction {
         log.info(seq);
         // 0. seq가지고 게시글을 가져온다
         Bbs bbs = boardService.getView(seq);
-        // - commentAction
-        commentAction.list(seq,authentication);
-
         // 1.게시글이 없을 경우 (validation 처리)
         if(bbs == null){
             //게시글 없어 err

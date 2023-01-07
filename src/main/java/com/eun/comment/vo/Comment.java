@@ -15,5 +15,5 @@ public class Comment {
     private int memberSeq;
     private String deleteYn;
     private String createDate;
-
+    private String updateDate;
 }

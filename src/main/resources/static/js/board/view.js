@@ -123,6 +123,11 @@ class View {
                 this.notiModal.open();
             });
 
+        axios.post(`/comment/list/${seq}`) //비동기 통신 commentList 호출
+            .then(res => {
+
+            })
+
     }
 
 

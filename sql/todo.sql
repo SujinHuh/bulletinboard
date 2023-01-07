@@ -13,5 +13,10 @@ CREATE TABLE todo (
 ) ENGINE=InnoDB CHARSET=utf8;
 
 
-select * from todo;
+select t.member_seq, m.* from todo t
+left join member m
+on t.member_seq = m.seq;
 
+
+select c.cd_nm, b.title, b.content from bbs b, common_code c where
+                                       b.bbs_cd = c.cd
