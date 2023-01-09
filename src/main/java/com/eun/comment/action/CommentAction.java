@@ -33,11 +33,12 @@ public class CommentAction {
         response.setData(list);
         log.info(list.toString());
 
-        response.setData(ResponseCodes.SUCCESS.getCode());
+        response.setCode(ResponseCodes.SUCCESS.getCode());
         response.setMessage(ResponseCodes.SUCCESS.getMessage());
         return response;
     }
 
+    /** 댓글 add */
     @PostMapping(value = "/comment/list/add")
     @ResponseBody public ResponseVo add(@RequestBody Comment param, Authentication authentication) {
         ResponseVo response = new ResponseVo();
@@ -45,8 +46,13 @@ public class CommentAction {
         param.setMemberSeq(user.getMember().getSeq());
 
         log.info(param.toString());
-        //service -> add 필요
-
+        log.info("user.getMember.toString" + user.getMember().toString());
+        // service 전달
+        int result = commentService.add(param);
+        log.info(param.toString());
+        if(0 < result){
+            response.setData(param);
+        }
 
         response.setCode(ResponseCodes.SUCCESS.getCode());
         response.setMessage(ResponseCodes.SUCCESS.getMessage());

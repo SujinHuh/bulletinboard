@@ -12,4 +12,6 @@ public class CommentService {
     @Autowired
     CommentMapper commentMapper;
     public List<Comment> list(String seq) {return commentMapper.list(seq);}
+
+    public int add(Comment param) {return commentMapper.add(param);}
 }

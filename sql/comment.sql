@@ -12,3 +12,4 @@ CREATE TABLE comment
 
 
 SELECT * FROM comment where bbs_seq = bbs_seq and delete_yn = 'N';
+SELECT * FROM COMMENT WHERE bbs_seq = 4

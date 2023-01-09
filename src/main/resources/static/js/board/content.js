@@ -27,7 +27,7 @@ class Content{
     addContent(e) {
         let param = {
             title : this.dom.title.value,
-            content: this.dom.content.value
+            content: this.dom.content.value,
         };
 
         if(this.dom.privateN.checked){
@@ -52,6 +52,7 @@ class Content{
             .catch((res) => {
                 console.log(res);
             });
+
     }
 
 }
