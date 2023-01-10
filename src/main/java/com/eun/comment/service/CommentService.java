@@ -14,4 +14,6 @@ public class CommentService {
     public List<Comment> list(String seq) {return commentMapper.list(seq);}
 
     public int add(Comment param) {return commentMapper.add(param);}
+
+    public Comment getComment(int seq) {return  commentMapper.getComment(seq);}
 }

@@ -10,9 +10,13 @@
             </div>
         </div>
         <hr>
-        <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave a comment here" id="commentText" style="height: 100px;"></textarea>
-            <label for="commentText">댓글</label>
+        <div class="my-3 p-3 bg-black rounded shadow-sm" style="padding-top: 10px">
+            <h6 class="border-bottom pb-2 mb-0">Reply list</h6>
+            <div id="commentList"></div>
+        </div>
+        <div class="container-fluid">
+            <textarea class="form-control" placeholder="댓글을 입력해주세요" id="commentText" style="height: 100px;"></textarea>
+<!--            <label for="commentText">댓글</label>-->
         </div>
         <button type="button" id="commentAddBt" class="btn btn-info m-2">등록</button>
     </div>

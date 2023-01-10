@@ -7,7 +7,8 @@ class View {
 
     constructor() {
         this.dom = {
-            commentText : document.getElementById('commentText')
+            commentList : document.getElementById('commentList')
+            ,commentText : document.getElementById('commentText')
             , commentAddBt : document.getElementById('commentAddBt')
         };
 
@@ -105,7 +106,9 @@ class View {
                 if (res.data.code === '0000') {
                     alert('댓글 추가 완료');
                     //비동기로 -> 단일객체로
-
+                    this.dom.commentText.value = ''; //입력 인풋 초기화
+                    let div = this.render(res.data.data);
+                    this.dom.commentList.insertAdjacentHTML('beforeend', div);
                 } else {
                     alert('댓글 추가 실패');
                 }
@@ -115,7 +118,16 @@ class View {
             })
     }
 
-    getComment() {
+    render(data) { //list구현하는 함수
+        let div = `<tr>` +
+            `<td>${data.seq}</td>`+
+            `<td class="card-header" data-seq="${data.seq}" > ${data.text}</a></td>` +
+            `<td>${data.createDate == undefined ? '' : data.createDate}</td>`+
+            `</tr>`;
+        return div;
+    }
+
+    getComment() { //coment list로 가져오기
         console.log("getComment>>> 진입")
         axios.post('/comment/list/'+ this.seq)
             .then((res) => {
@@ -124,11 +136,17 @@ class View {
                 console.log(res.data);
                 console.log(res.data.data);
                 for(let i = 0; i < list.length; i++) {
-                    let div = `<tr>` +
-                        `<td>${list[i].seq}</td>`+
-                        ``
+                    let div = this.render(list[i]);
+                    this.dom.commentList.insertAdjacentHTML("beforeend", div) // javascript dom요소 삽입
                 }
+                let array = [...document.getElementById('card-header')];
+                array.forEach((value, index) => {
+                    location.href = '/comment/list/' + this.dom.commentList.currentTarget.getAttribute('seq')
+                })
             })
+            .catch((res) => {
+                console.log(res);
+            });
     }
 
     //비동기 -> 동기

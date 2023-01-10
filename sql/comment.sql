@@ -12,4 +12,8 @@ CREATE TABLE comment
 
 
 SELECT * FROM comment where bbs_seq = bbs_seq and delete_yn = 'N';
-SELECT * FROM COMMENT WHERE bbs_seq = 4
+SELECT * FROM COMMENT WHERE bbs_seq = 25;
+SELECT seq, text, member_seq, create_date FROM COMMENT WHERE bbs_seq = 25 and delete_yn = 'N';
+Select * from comment;
+
+SELECT * FROM COMMENT WHERE seq = 9;

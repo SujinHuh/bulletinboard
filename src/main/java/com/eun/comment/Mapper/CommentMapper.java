@@ -15,7 +15,9 @@ public interface CommentMapper {
     @Options(useGeneratedKeys = true, keyProperty = "seq")
     int add(Comment param);
 
-    @Select("SELECT seq, text, member_seq, create_date FROM COMMENT WHERE bbs_seq = ${seq} and delete_yn = 'N'")
+    @Select("SELECT seq, text, member_seq, create_date FROM COMMENT WHERE bbs_seq = #{seq} and delete_yn = 'N'")
     List<Comment> list(String seq);
 
+    @Select("SELECT * FROM COMMENT WHERE seq = #{seq}")
+    Comment getComment(int seq);
 }

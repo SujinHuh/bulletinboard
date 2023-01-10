@@ -48,10 +48,14 @@ public class CommentAction {
         log.info(param.toString());
         log.info("user.getMember.toString" + user.getMember().toString());
         // service 전달
+        // 여기서 insert가 정상적으로됐으면
+        // param에는 seq값이 들어있다.
         int result = commentService.add(param);
         log.info(param.toString());
         if(0 < result){
+//            param = commentService.getComment(param.getSeq());
             response.setData(param);
+            log.info("param.seq로 꺼내온 것" + param.toString());
         }
 
         response.setCode(ResponseCodes.SUCCESS.getCode());
