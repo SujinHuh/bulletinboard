@@ -53,7 +53,8 @@ public class CommentAction {
         int result = commentService.add(param);
         log.info(param.toString());
         if(0 < result){
-//            param = commentService.getComment(param.getSeq());
+            log.info("받아온 param >>>> " + param.toString());
+            param = commentService.getComment(param.getSeq());
             response.setData(param);
             log.info("param.seq로 꺼내온 것" + param.toString());
         }
@@ -62,5 +63,8 @@ public class CommentAction {
         response.setMessage(ResponseCodes.SUCCESS.getMessage());
         return response;
     }
+    /**댓글 delete */
+
+
 
 }

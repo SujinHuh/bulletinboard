@@ -1,6 +1,6 @@
 package com;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -12,17 +12,16 @@ public class API_TEST_JAVA {
 
     public static void main(String[] args) throws Exception {
 
-        boolean test = false;
-
-        String str = "";
+        String result = "";
         HttpURLConnection con = null;
         OutputStream os = null;
         BufferedReader in = null;
 
-        if( test ) {
+        if( true ) {
             try {
-                String param = "a=a&b=b";
-                String urlString = "";
+                String API_KEY = "37850b0c9b708891aff390ad3413691d";
+                String param = "";
+                String urlString = "https://api.kakaobrain.com/v1/inference/kogpt/generation";
 
                 URL url = new URL(urlString);
                 con = (HttpURLConnection) url.openConnection();
@@ -31,21 +30,34 @@ public class API_TEST_JAVA {
                 con.setRequestMethod("POST");
                 con.setRequestProperty("Accept-Charset", "UTF-8");
                 con.setRequestProperty("Content-Type", "application/json");
+                con.setRequestProperty("Authorization", "KakaoAK " + API_KEY);
 
                 con.setConnectTimeout(20000);
                 con.setReadTimeout(20000);
-                os = con.getOutputStream();
-                os.write(param.getBytes("UTF-8"));
-                String buffer;
-                System.out.println(con.getResponseCode());
 
-                in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+                os = con.getOutputStream();
+
+                JsonObject json = new JsonObject();
+
+                json.addProperty("prompt", "오늘 점심은 뭘먹을까");
+                json.addProperty("max_tokens", 300);
+                json.addProperty("n", 1);
+
+                param = json.toString();
+
+                System.out.println(">>> " + param);
+
+                os.write(param.getBytes("utf-8"));
+
+                String buffer;
+
+                in = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
 
                 while ((buffer = in.readLine()) != null) {
-                    str += buffer;
+                    result += buffer;
                 }
-
-                System.out.println(str);
+                System.out.println("--------------------------------------------------------");
+                System.out.println(result);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {

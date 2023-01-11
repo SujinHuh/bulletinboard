@@ -119,11 +119,11 @@ class View {
     }
 
     render(data) { //list구현하는 함수
-        let div = `<tr>` +
+        let div = ` <tr>` +
             `<td>${data.seq}</td>`+
             `<td class="card-header" data-seq="${data.seq}" > ${data.text}</a></td>` +
             `<td>${data.createDate == undefined ? '' : data.createDate}</td>`+
-            `</tr>`;
+            `</tr> <p>`;
         return div;
     }
 
